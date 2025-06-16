@@ -1,0 +1,1 @@
+export { purpleTheme } from './purpleTheme';
