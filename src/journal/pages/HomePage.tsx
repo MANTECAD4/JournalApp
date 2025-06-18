@@ -1,11 +1,11 @@
-import { MailOutline } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+import { JournalLayout } from '../layout/JournalLayout';
+import { NoteView, NothingSelectedView } from '../views';
 
-export const HomePage = () => {
+export const HomePage = ({ drawerWidth = 240 }) => {
 	return (
-		<>
-			<MailOutline />
-			<Typography variant={'h1'}>HomePage</Typography>
-		</>
+		<JournalLayout>
+			{/* <NothingSelectedView /> */}
+			<NoteView />
+		</JournalLayout>
 	);
 };
