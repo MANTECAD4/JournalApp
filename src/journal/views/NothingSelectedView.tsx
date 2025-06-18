@@ -1,5 +1,6 @@
-import { BubbleChartOutlined } from '@mui/icons-material';
 import { Grid, Typography } from '@mui/material';
+import CircularText from '../../ui/components/CircularText/CircularText/CircularText';
+
 export const NothingSelectedView = () => {
 	return (
 		<Grid
@@ -15,11 +16,15 @@ export const NothingSelectedView = () => {
 			}}
 		>
 			<Grid sx={{ gridColumn: { xs: 'span 12' } }}>
-				<BubbleChartOutlined sx={{ fontSize: 100, color: 'white' }} />
+				<CircularText
+					text="JOURNAL*APP*"
+					onHover="speedUp"
+					spinDuration={20}
+					className="custom-class"
+				/>
 			</Grid>
-			<Grid sx={{ gridColumn: { xs: 'span 12' } }}>
+			<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 2 }}>
 				<Typography color="white" variant="h6">
-					{' '}
 					Select or create a new entry
 				</Typography>
 			</Grid>
