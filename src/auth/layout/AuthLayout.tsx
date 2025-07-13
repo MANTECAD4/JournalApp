@@ -22,7 +22,7 @@ export const AuthLayout = ({ children, title }: Props) => {
 				className="animate__animated animate__fadeIn"
 				sx={{
 					gridColumn: { xs: 'span 12' },
-					backgroundColor: 'white',
+					background: 'white',
 					padding: 3,
 					borderRadius: 2,
 					boxShadow: 4,

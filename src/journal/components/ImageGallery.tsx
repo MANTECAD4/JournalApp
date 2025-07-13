@@ -3,9 +3,7 @@ import { ImageList, ImageListItem } from '@mui/material';
 
 export const ImageGallery = () => {
 	return (
-		<Box
-			sx={{ width: '100%', height: 'calc(100vh - 64px)', overflowY: 'scroll' }}
-		>
+		<Box sx={{ width: '100%', height: 500, overflowY: 'scroll' }}>
 			<ImageList variant="masonry" cols={3} gap={8}>
 				{itemData.map((item) => (
 					<ImageListItem key={item.img}>

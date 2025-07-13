@@ -1,42 +1,103 @@
-import { Grid, TextField, Button, Typography, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
-
+import { useRegister } from '../../hooks';
 import { AuthLayout } from '../layout/AuthLayout';
-import { AppRegistration, Create } from '@mui/icons-material';
+import {
+	Grid,
+	TextField,
+	Button,
+	Typography,
+	Link,
+	Alert,
+} from '@mui/material';
+import { AppRegistration } from '@mui/icons-material';
 
 export const RegisterPage = () => {
+	const {
+		errorMessage,
+		errors,
+		handleSubmit,
+		onSubmit,
+		register,
+		isCheckingAuth,
+	} = useRegister();
+
 	return (
 		<AuthLayout title="Register">
-			<form>
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<Grid container direction="column" spacing={1}>
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
-							autoComplete="name"
-							label="Name"
-							type="text"
-							placeholder="John Doe"
+							autoComplete="displayName"
 							fullWidth
+							label="Name"
+							placeholder="John Doe"
+							type="text"
+							{...register('displayName', {
+								required: 'Name required',
+								minLength: { value: 1, message: 'Invalid length' },
+								pattern: {
+									value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,}$/,
+									message: 'Invalid name',
+								},
+							})}
+							error={!!errors.displayName}
+							helperText={errors.displayName?.message}
 						/>
 					</Grid>
 
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
 							autoComplete="email"
-							label="Email"
-							type="email"
-							placeholder="example@gmail.com"
 							fullWidth
+							label="Email"
+							placeholder="example@gmail.com"
+							type="email"
+							{...register('email', {
+								required: 'An email address is required',
+								minLength: { value: 6, message: '' },
+								pattern: {
+									value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+									message: 'Invalid email',
+								},
+							})}
+							error={!!errors.email}
+							helperText={errors.email?.message}
 						/>
 					</Grid>
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
 							autoComplete="current-password"
-							label="Password"
-							type="password"
-							placeholder=""
 							fullWidth
+							label="Password"
+							placeholder=""
+							type="password"
+							{...register('password', {
+								required: 'A password is required',
+								minLength: { value: 6, message: 'Min 6 characters' },
+								pattern: {
+									value:
+										/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+									message: 'Invalid password',
+								},
+							})}
+							error={!!errors.password}
+							helperText={errors.password?.message}
 						/>
 					</Grid>
+
+					{/* Alert error */}
+					<Grid
+						display={errorMessage !== '' ? '' : 'none'}
+						sx={{
+							gridColumn: { xs: 'span 12', sm: 'span 6' },
+							width: '100%',
+							mt: 2,
+						}}
+					>
+						<Alert severity="error">{errorMessage}</Alert>
+					</Grid>
+
+					{/* Create account button */}
 					<Grid
 						sx={{
 							gridColumn: { xs: 'span 12', sm: 'span 6' },
@@ -45,6 +106,8 @@ export const RegisterPage = () => {
 						}}
 					>
 						<Button
+							disabled={isCheckingAuth}
+							type="submit"
 							fullWidth
 							sx={{ backgroundColor: 'secondary.main' }}
 							variant="contained"

@@ -2,29 +2,54 @@ import { Google, Login } from '@mui/icons-material';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { AuthLayout } from '../layout/AuthLayout';
+import { useLogin } from '../../hooks';
 
 export const LoginPage = () => {
+	const { errors, handleSubmit, onGoogleSignIn, onSubmit, register, status } =
+		useLogin();
+
 	return (
 		<AuthLayout title="Login">
-			<form>
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<Grid container direction="column" spacing={1}>
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
 							autoComplete="email"
-							label="email"
-							type="email"
-							placeholder="example@gmail.com"
 							fullWidth
+							label="email"
+							placeholder="example@gmail.com"
+							{...register('email', {
+								required: 'An email address is required',
+								minLength: { value: 6, message: '' },
+								pattern: {
+									value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+									message: 'Invalid email',
+								},
+							})}
+							error={!!errors.email}
+							helperText={errors.email?.message}
+							type="email"
 						/>
 					</Grid>
 
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
 							autoComplete="current-password"
-							label="Password"
-							type="password"
-							placeholder=""
 							fullWidth
+							label="Password"
+							placeholder=""
+							type="password"
+							{...register('password', {
+								required: 'A password is required',
+								minLength: { value: 6, message: 'Min 6 characters' },
+								pattern: {
+									value:
+										/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+									message: 'Invalid password',
+								},
+							})}
+							error={!!errors.password}
+							helperText={errors.password?.message}
 						/>
 					</Grid>
 
@@ -36,6 +61,8 @@ export const LoginPage = () => {
 							}}
 						>
 							<Button
+								disabled={status === 'checking'}
+								type="submit"
 								fullWidth
 								sx={{ backgroundColor: 'secondary.main' }}
 								variant="contained"
@@ -51,6 +78,8 @@ export const LoginPage = () => {
 							}}
 						>
 							<Button
+								disabled={status === 'checking'}
+								onClick={onGoogleSignIn}
 								fullWidth
 								sx={{ backgroundColor: 'secondary.main' }}
 								variant="contained"
