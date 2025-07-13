@@ -14,7 +14,11 @@ export const catchError = (error: any) => {
 	}
 
 	return {
-		ok: false,
 		errorMessage,
+		ok: false,
+		displayName: '',
+		email: '',
+		photoURL: '',
+		uid: '',
 	};
 };

@@ -1,11 +1,7 @@
-import {
-	signInWithGoogle,
-	registerUser,
-	signInUser,
-} from '../../firebase/providers';
 import { authActions } from './authSlice';
-import type { AppDispatch, RootState } from '../store';
+import type { AppDispatch } from '../store';
 import type { RegisterUser, SignInUser } from './auth.types';
+import { registerUser, signInWithGoogle, signInUser } from '../../firebase';
 
 export const checkingAuthentication = () => {
 	return async (dispatch: AppDispatch) => {
@@ -43,7 +39,7 @@ export const startCreatingUserWithEmailPassword = (props: RegisterUser) => {
 		dispatch(authActions.checkingCredentials());
 		const result = await registerUser({ email, displayName, password });
 		//B Implemntar get error
-		if (!result.ok) return dispatch(authActions.logout(result.errorMessage!));
+		if (!result.ok) return dispatch(authActions.logout(result.errorMessage));
 		if (!result.displayName || !result.email || !result.uid)
 			throw new Error('Missin one required field');
 		dispatch(
@@ -62,7 +58,7 @@ export const startEmailAndPasswordSignIn = (props: SignInUser) => {
 	return async (dispatch: AppDispatch) => {
 		dispatch(authActions.checkingCredentials());
 		const result = await signInUser({ email, password });
-		if (!result.ok) return dispatch(authActions.logout(result.errorMessage!));
+		if (!result.ok) return dispatch(authActions.logout(result.errorMessage));
 		if (!result.displayName || !result.email || !result.uid)
 			throw new Error('Missin one required field');
 		dispatch(
