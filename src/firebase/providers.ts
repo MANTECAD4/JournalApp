@@ -5,8 +5,9 @@ import {
 	signInWithPopup,
 	createUserWithEmailAndPassword,
 	updateProfile,
+	signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getError } from '../helpers/auth';
+import { getError } from '../helpers';
 
 const googleProvider = new GoogleAuthProvider();
 /**
@@ -83,6 +84,50 @@ export const registerUser = async (props: RegisterUser) => {
 			console.warn(JSON.stringify(error));
 		}
 
+		return {
+			ok: false,
+			errorMessage,
+		};
+	}
+};
+
+type LoginUser = {
+	email: string;
+	password: string;
+};
+
+/**
+ * Sign in with email and password
+ * @param {LoginUser}props
+ * @returns
+ */
+export const signInUser = async (props: LoginUser) => {
+	const { email, password } = props;
+	try {
+		const resp = await signInWithEmailAndPassword(
+			FirebaseAuth,
+			email,
+			password
+		);
+		const { displayName, photoURL, uid } = resp.user;
+		return {
+			ok: true,
+			displayName,
+			email,
+			photoURL,
+			uid,
+		};
+	} catch (error) {
+		let errorMessage = 'Oops! Something went wrong. Try again.';
+
+		if (error instanceof FirebaseError) {
+			errorMessage = getError(error.code);
+		} else if (error instanceof Error) {
+			console.warn(error.message);
+			errorMessage = error.message;
+		} else {
+			console.warn(JSON.stringify(error));
+		}
 		return {
 			ok: false,
 			errorMessage,

@@ -1,12 +1,26 @@
 import { Google, Login } from '@mui/icons-material';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import {
+	Alert,
+	Button,
+	Grid,
+	Link,
+	TextField,
+	Typography,
+} from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useLogin } from '../../hooks';
 
 export const LoginPage = () => {
-	const { errors, handleSubmit, onGoogleSignIn, onSubmit, register, status } =
-		useLogin();
+	const {
+		errors,
+		handleSubmit,
+		onGoogleSignIn,
+		onSubmit,
+		register,
+		status,
+		errorMessage,
+	} = useLogin();
 
 	return (
 		<AuthLayout title="Login">
@@ -51,6 +65,18 @@ export const LoginPage = () => {
 							error={!!errors.password}
 							helperText={errors.password?.message}
 						/>
+					</Grid>
+
+					{/* Error alert*/}
+					<Grid
+						display={errorMessage !== '' ? '' : 'none'}
+						sx={{
+							gridColumn: { xs: 'span 12', sm: 'span 6' },
+							width: '100%',
+							mt: 2,
+						}}
+					>
+						<Alert severity="error">{errorMessage}</Alert>
 					</Grid>
 
 					<Grid container sx={{ mt: 2 }} spacing={2}>

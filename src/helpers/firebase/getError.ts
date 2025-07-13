@@ -19,6 +19,7 @@ export const getError = (code: string) => {
 		'auth/invalid-phone-number':
 			'El número de teléfono ingresado no es válido.',
 		'auth/invalid-photo-url': 'La URL de la foto no es válida.',
+		'auth/invalid-credential': 'Credenciales inválidas.',
 	};
 
 	if (!errors[code]) {

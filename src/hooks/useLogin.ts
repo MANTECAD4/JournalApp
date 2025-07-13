@@ -4,6 +4,7 @@ import { useAppDispatch } from '../store/store';
 import type { RootState } from '../store/store';
 import {
 	checkingAuthentication,
+	startEmailAndPasswordSignIn,
 	startGoogleSignIn,
 } from '../store/auth/thunks';
 
@@ -13,7 +14,9 @@ export type LoginInputs = {
 };
 
 export const useLogin = () => {
-	const { status } = useSelector((state: RootState) => state.auth);
+	const { status, errorMessage } = useSelector(
+		(state: RootState) => state.auth
+	);
 	const dispatch = useAppDispatch();
 
 	const {
@@ -23,8 +26,7 @@ export const useLogin = () => {
 	} = useForm<LoginInputs>();
 
 	const onSubmit: SubmitHandler<LoginInputs> = (data) => {
-		dispatch(checkingAuthentication());
-		console.log(JSON.stringify(data));
+		dispatch(startEmailAndPasswordSignIn(data));
 	};
 
 	const onGoogleSignIn = () => {
@@ -32,6 +34,7 @@ export const useLogin = () => {
 	};
 
 	return {
+		errorMessage,
 		errors,
 		handleSubmit,
 		onGoogleSignIn,

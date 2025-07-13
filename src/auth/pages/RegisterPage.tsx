@@ -85,7 +85,7 @@ export const RegisterPage = () => {
 						/>
 					</Grid>
 
-					{/* Alert error */}
+					{/* Error alert*/}
 					<Grid
 						display={errorMessage !== '' ? '' : 'none'}
 						sx={{

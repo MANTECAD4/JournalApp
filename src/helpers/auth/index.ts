@@ -1,1 +1,0 @@
-export { getError } from './getError';
