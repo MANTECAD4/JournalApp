@@ -1,7 +1,5 @@
-import { FirebaseError } from 'firebase/app';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FirebaseAuth } from '../config';
-import { getError } from '../../helpers';
 import { catchError } from '../../helpers/firebase/catchError';
 
 type RegisterUser = {
@@ -14,7 +12,7 @@ type RegisterUser = {
  * @param {RegisterUser} props
  * @returns
  */
-export const registerUser = async (props: RegisterUser) => {
+export const createUserEmailPassword = async (props: RegisterUser) => {
 	const { displayName, email, password } = props;
 	try {
 		const resp = await createUserWithEmailAndPassword(

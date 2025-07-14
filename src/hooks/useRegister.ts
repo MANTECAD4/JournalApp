@@ -1,9 +1,9 @@
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import type { RegisterInputs } from '../auth/pages/Types';
-import { startCreatingUserWithEmailPassword } from '../store/auth/thunks';
-import { useAppDispatch, type RootState } from '../store/store';
-import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useAppDispatch, type RootState } from '../store/store';
+import { startCreatingUserWithEmailPassword } from '../store/auth/thunks';
+import type { RegisterInputs } from '../auth/pages/Types';
 
 export const useRegister = () => {
 	const dispatch = useAppDispatch();
