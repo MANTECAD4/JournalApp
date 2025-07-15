@@ -12,6 +12,7 @@ import { authActions } from '../store/auth/authSlice';
 export const useAuth = () => {
 	const { status } = useSelector((state: RootState) => state.auth);
 	const isAuth = useMemo(() => status === 'authenticated', [status]);
+	const isChecking = useMemo(() => status === 'checking', [status]);
 	const dispatch = useAppDispatch();
 	useEffect(() => {
 		const unsuscribe = onAuthStateChanged(FirebaseAuth, async (user) => {
@@ -28,5 +29,5 @@ export const useAuth = () => {
 
 		return () => unsuscribe();
 	}, []);
-	return { isAuth, status };
+	return { isAuth, isChecking, status };
 };

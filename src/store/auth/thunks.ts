@@ -87,9 +87,11 @@ export const startEmailAndPasswordSignIn = (props: SignInUser) => {
 };
 
 export const startLogout = () => {
-	return async (dispatch: AppDispatch) => {
+	return (dispatch: AppDispatch) => {
 		dispatch(authActions.checkingCredentials());
-		await logoutFirebaseUser();
-		dispatch(authActions.logout(''));
+		setTimeout(async () => {
+			await logoutFirebaseUser();
+			dispatch(authActions.logout(''));
+		}, 500);
 	};
 };
