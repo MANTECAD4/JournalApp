@@ -3,7 +3,6 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useAppDispatch } from '../store/store';
 import type { RootState } from '../store/store';
 import {
-	checkingAuthentication,
 	startEmailAndPasswordSignIn,
 	startGoogleSignIn,
 } from '../store/auth/thunks';
