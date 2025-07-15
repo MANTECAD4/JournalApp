@@ -15,7 +15,7 @@ export const CheckingAuthLoader = () => {
 					gridColumn: { alignItems: 'center' },
 				}}
 			>
-				<Grid direction={'row'} justifyContent={'center'}>
+				<Grid container direction={'row'} justifyContent={'center'}>
 					<CircularProgress color="info" />
 				</Grid>
 			</Grid>

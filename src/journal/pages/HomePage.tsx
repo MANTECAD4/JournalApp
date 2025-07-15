@@ -6,8 +6,8 @@ import { Add } from '@mui/icons-material';
 export const HomePage = ({ drawerWidth = 240 }) => {
 	return (
 		<JournalLayout>
-			<NothingSelectedView />
-			{/* <NoteView /> */}
+			{/* <NothingSelectedView /> */}
+			<NoteView />
 			<IconButton
 				size="large"
 				sx={{

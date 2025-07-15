@@ -4,6 +4,7 @@ import {
 	createUserEmailPassword,
 } from '../../firebase';
 import { authActions } from './authSlice';
+import { logoutFirebaseUser } from '../../firebase/providers/logoutUser';
 import type { AppDispatch } from '../store';
 import type { RegisterUser, SignInUser } from './auth.types';
 
@@ -76,11 +77,19 @@ export const startEmailAndPasswordSignIn = (props: SignInUser) => {
 			throw new Error('Missin one required field');
 		dispatch(
 			authActions.login({
-				displayName: result.displayName,
-				photoURL: result.photoURL ? result.photoURL : 'No URL',
-				uid: result.uid,
-				email: result.email,
+				displayName: result.displayName ?? 'No displayName',
+				photoURL: result.photoURL ?? 'No URL',
+				uid: result.uid ?? 'No uid',
+				email: result.email ?? 'No email',
 			})
 		);
+	};
+};
+
+export const startLogout = () => {
+	return async (dispatch: AppDispatch) => {
+		dispatch(authActions.checkingCredentials());
+		await logoutFirebaseUser();
+		dispatch(authActions.logout(''));
 	};
 };
