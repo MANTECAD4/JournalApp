@@ -2,11 +2,13 @@ import { Logout, MenuOutlined } from '@mui/icons-material';
 import { AppBar, IconButton, Toolbar, Grid, Typography } from '@mui/material';
 import { useAppDispatch } from '../../store/store';
 import { startLogout } from '../../store/auth/thunks';
+
 type Props = {
 	drawerWidth?: number;
 };
 export const Navbar = ({ drawerWidth = 240 }: Props) => {
 	const dispatch = useAppDispatch();
+
 	const onLogout = () => {
 		dispatch(startLogout());
 	};
@@ -37,9 +39,11 @@ export const Navbar = ({ drawerWidth = 240 }: Props) => {
 					<Typography variant="h6" noWrap component="div">
 						JournalApp
 					</Typography>
-					<IconButton onClick={onLogout} color="error">
-						<Logout />
-					</IconButton>
+					<Grid container direction="row" alignItems={'center'}>
+						<IconButton onClick={onLogout} color="error">
+							<Logout />
+						</IconButton>
+					</Grid>
 				</Grid>
 			</Toolbar>
 		</AppBar>

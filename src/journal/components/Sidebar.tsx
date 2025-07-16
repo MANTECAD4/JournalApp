@@ -1,5 +1,7 @@
+import { useSelector } from 'react-redux';
 import { TurnedInNot } from '@mui/icons-material';
 import {
+	Avatar,
 	Box,
 	Divider,
 	Drawer,
@@ -12,14 +14,15 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
 import type { RootState } from '../../store/store';
 
 type Props = {
 	drawerWidth?: number;
 };
 export const Sidebar = ({ drawerWidth = 240 }: Props) => {
-	const { displayName } = useSelector((state: RootState) => state.auth);
+	const { displayName, photoURL } = useSelector(
+		(state: RootState) => state.auth
+	);
 	return (
 		<Box
 			component="nav"
@@ -34,8 +37,15 @@ export const Sidebar = ({ drawerWidth = 240 }: Props) => {
 				}}
 			>
 				<Toolbar>
+					<Avatar
+						variant="circular"
+						sx={{ bgcolor: '', mr: 1 }}
+						alt={displayName}
+						src={photoURL}
+					/>
+
 					<Typography variant="h6" noWrap component="div">
-						{displayName}
+						My Notes
 					</Typography>
 				</Toolbar>
 				<Divider />

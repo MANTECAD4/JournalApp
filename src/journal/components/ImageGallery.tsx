@@ -3,7 +3,14 @@ import { ImageList, ImageListItem } from '@mui/material';
 
 export const ImageGallery = () => {
 	return (
-		<Box sx={{ width: '100%', height: 500, overflowY: 'scroll' }}>
+		<Box
+			sx={{
+				flex: 1,
+				overflowY: 'auto',
+				paddingBottom: 2,
+				maxHeight: 'calc(100vh - 400px)', // ajusta según el tamaño del header y campos
+			}}
+		>
 			<ImageList variant="masonry" cols={3} gap={8}>
 				{itemData.map((item) => (
 					<ImageListItem key={item.img}>

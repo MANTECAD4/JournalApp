@@ -4,7 +4,7 @@ import { ImageGallery } from '../components';
 
 export const NoteView = () => {
 	return (
-		<Grid container direction="row" alignItems="center" sx={{ mb: 1 }}>
+		<Grid sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
 			<Grid
 				container
 				direction="row"

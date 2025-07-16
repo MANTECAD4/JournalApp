@@ -20,10 +20,10 @@ export const startCreatingUserWithEmailPassword = (props: RegisterUser) => {
 		if (!result.ok) return dispatch(authActions.logout(result.errorMessage));
 		dispatch(
 			authActions.login({
-				displayName: result.displayName ?? 'No display name',
-				photoURL: result.photoURL ?? 'No URL',
+				displayName: result.displayName ?? '',
+				photoURL: result.photoURL ?? '',
 				uid: result.uid,
-				email: result.email ?? 'No email',
+				email: result.email ?? '',
 			})
 		);
 	};
