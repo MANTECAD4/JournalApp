@@ -4,6 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { FirebaseAuth } from '../firebase';
 import { useAppDispatch, type RootState } from '../store/store';
 import { authActions } from '../store/auth/authSlice';
+import { startLoadingNotes } from '../store/journal/thunks/startLoadingNotes';
 
 /**
  * Custom hook for App router logic
@@ -11,9 +12,10 @@ import { authActions } from '../store/auth/authSlice';
  */
 export const useAuth = () => {
 	const { status } = useSelector((state: RootState) => state.auth);
+	const dispatch = useAppDispatch();
 	const isAuth = useMemo(() => status === 'authenticated', [status]);
 	const isChecking = useMemo(() => status === 'checking', [status]);
-	const dispatch = useAppDispatch();
+
 	useEffect(() => {
 		const unsuscribe = onAuthStateChanged(FirebaseAuth, async (user) => {
 			if (!user) return dispatch(authActions.logout(''));
@@ -25,6 +27,7 @@ export const useAuth = () => {
 					email: user.email ?? 'No URL',
 				})
 			);
+			dispatch(startLoadingNotes());
 		});
 
 		return () => unsuscribe();

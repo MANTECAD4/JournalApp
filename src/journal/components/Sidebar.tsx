@@ -1,28 +1,33 @@
 import { useSelector } from 'react-redux';
-import { TurnedInNot } from '@mui/icons-material';
 import {
 	Avatar,
 	Box,
 	Divider,
 	Drawer,
-	Grid,
 	List,
-	ListItem,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import type { RootState } from '../../store/store';
+import { useAppDispatch, type RootState } from '../../store/store';
+import { NoteItem } from './NoteItem';
+import type { Note } from '../../store/journal/journalSlice.types';
+import { journalActions } from '../../store/journal/journalSlice';
+import { useCallback } from 'react';
 
 type Props = {
 	drawerWidth?: number;
 };
 export const Sidebar = ({ drawerWidth = 240 }: Props) => {
+	const dispatch = useAppDispatch();
+	const { notes } = useSelector((state: RootState) => state.journal);
 	const { displayName, photoURL } = useSelector(
 		(state: RootState) => state.auth
 	);
+
+	const onActivateNote = useCallback((note: Note) => {
+		dispatch(journalActions.setActiveNote(note));
+	}, []);
+
 	return (
 		<Box
 			component="nav"
@@ -36,7 +41,14 @@ export const Sidebar = ({ drawerWidth = 240 }: Props) => {
 					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
 				}}
 			>
-				<Toolbar>
+				<Toolbar
+					sx={{
+						position: 'sticky',
+						zIndex: 10,
+						top: 0,
+						backgroundColor: 'white',
+					}}
+				>
 					<Avatar
 						variant="circular"
 						sx={{ bgcolor: '', mr: 1 }}
@@ -50,18 +62,8 @@ export const Sidebar = ({ drawerWidth = 240 }: Props) => {
 				</Toolbar>
 				<Divider />
 				<List>
-					{['January', 'February', 'March', 'April'].map((month) => (
-						<ListItem key={month} disablePadding>
-							<ListItemButton>
-								<ListItemIcon>
-									<TurnedInNot />
-								</ListItemIcon>
-								<Grid container>
-									<ListItemText primary={month} />
-									<ListItemText secondary={'Some random text uwuw'} />
-								</Grid>
-							</ListItemButton>
-						</ListItem>
+					{notes.map((note) => (
+						<NoteItem key={note.id} note={note} activateNote={onActivateNote} />
 					))}
 				</List>
 			</Drawer>

@@ -1,7 +1,8 @@
 import Box from '@mui/material/Box';
 import { ImageList, ImageListItem } from '@mui/material';
+import React from 'react';
 
-export const ImageGallery = () => {
+export const ImageGallery = React.memo(() => {
 	return (
 		<Box
 			sx={{
@@ -25,7 +26,7 @@ export const ImageGallery = () => {
 			</ImageList>
 		</Box>
 	);
-};
+});
 
 const itemData = [
 	{
