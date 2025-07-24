@@ -1,3 +1,4 @@
+import React from 'react';
 import { TurnedInNot } from '@mui/icons-material';
 import {
 	Grid,
@@ -8,7 +9,6 @@ import {
 } from '@mui/material';
 import type { Note } from '../../store/journal/journalSlice.types';
 import { getNotePreview } from '../../helpers/journal/getNotePreview';
-import React from 'react';
 
 type Props = {
 	note: Note;

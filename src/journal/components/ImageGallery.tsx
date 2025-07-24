@@ -1,29 +1,44 @@
 import Box from '@mui/material/Box';
-import { ImageList, ImageListItem } from '@mui/material';
+import { ImageList, ImageListItem, Typography } from '@mui/material';
 import React from 'react';
-
-export const ImageGallery = React.memo(() => {
+type Props = {
+	images: string[];
+};
+export const ImageGallery = React.memo(({ images }: Props) => {
 	return (
 		<Box
 			sx={{
 				flex: 1,
 				overflowY: 'auto',
 				paddingBottom: 2,
+				alignContent: 'center',
 				maxHeight: 'calc(100vh - 400px)', // ajusta según el tamaño del header y campos
 			}}
 		>
-			<ImageList variant="masonry" cols={3} gap={8}>
-				{itemData.map((item) => (
-					<ImageListItem key={item.img}>
-						<img
-							srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-							src={`${item.img}?w=248&fit=crop&auto=format`}
-							alt={item.title}
-							loading="lazy"
-						/>
-					</ImageListItem>
-				))}
-			</ImageList>
+			{images.length > 0 ? (
+				<ImageList variant="masonry" cols={3} gap={8}>
+					{images.map((item) => (
+						<ImageListItem key={item}>
+							<img src={`${item}`} loading="lazy" />
+						</ImageListItem>
+					))}
+				</ImageList>
+			) : (
+				<Box // este es el que quiero centrar
+					sx={{
+						height: '100%',
+						width: '100%',
+						display: 'flex',
+						minHeight: '400px', //
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<Typography variant="h5" fontFamily={'cursive'}>
+						xs
+					</Typography>
+				</Box>
+			)}
 		</Box>
 	);
 });

@@ -1,7 +1,18 @@
-import { Grid, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Grid, IconButton, Typography } from '@mui/material';
+import { Add } from '@mui/icons-material';
 import CircularText from '../../ui/components/CircularText/CircularText/CircularText';
+import { useAppDispatch, type RootState } from '../../store/store';
+import { startCreatingEmptyNote } from '../../store/journal/thunks';
 
 export const NothingSelectedView = () => {
+	const { isSaving } = useSelector((state: RootState) => state.journal);
+	const dispatch = useAppDispatch();
+
+	const onCreateNote = () => {
+		dispatch(startCreatingEmptyNote());
+	};
+
 	return (
 		<Grid
 			className="animate__animated animate__fadeIn"
@@ -29,6 +40,21 @@ export const NothingSelectedView = () => {
 					Select or create a new entry
 				</Typography>
 			</Grid>
+			<IconButton
+				disabled={isSaving}
+				onClick={onCreateNote}
+				size="large"
+				sx={{
+					':hover': { backgroundColor: 'error.main', opacity: 0.9 },
+					backgroundColor: 'error.main',
+					bottom: 40,
+					color: 'white',
+					position: 'fixed',
+					right: 40,
+				}}
+			>
+				<Add sx={{ fontSize: 35 }} />
+			</IconButton>
 		</Grid>
 	);
 };

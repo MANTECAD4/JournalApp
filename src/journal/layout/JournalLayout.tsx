@@ -1,5 +1,6 @@
 import { Box, Toolbar } from '@mui/material';
 import { Navbar, Sidebar } from '../components';
+import { ToastContainer } from 'react-toastify';
 
 type Props = {
 	children?: React.ReactNode;
@@ -26,6 +27,21 @@ export const JournalLayout = ({ children }: Props) => {
 				<Toolbar />
 				{children}
 			</Box>
+			<ToastContainer
+				position="bottom-right"
+				// stacked
+				limit={4}
+				autoClose={3000}
+				hideProgressBar={true}
+				newestOnTop={false}
+				closeOnClick={false}
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="light"
+				// transition="Bounce"
+			/>
 		</Box>
 	);
 };

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import {
 	Avatar,
 	Box,
+	Collapse,
 	Divider,
 	Drawer,
 	List,
@@ -12,7 +13,8 @@ import { useAppDispatch, type RootState } from '../../store/store';
 import { NoteItem } from './NoteItem';
 import type { Note } from '../../store/journal/journalSlice.types';
 import { journalActions } from '../../store/journal/journalSlice';
-import { useCallback } from 'react';
+import { Suspense, useCallback } from 'react';
+import { TransitionGroup } from 'react-transition-group';
 
 type Props = {
 	drawerWidth?: number;
@@ -62,9 +64,19 @@ export const Sidebar = ({ drawerWidth = 240 }: Props) => {
 				</Toolbar>
 				<Divider />
 				<List>
-					{notes.map((note) => (
-						<NoteItem key={note.id} note={note} activateNote={onActivateNote} />
-					))}
+					<Suspense fallback={<div>Cargando...</div>}>
+						<TransitionGroup>
+							{notes.map((note) => (
+								<Collapse key={note.id}>
+									<NoteItem
+										key={note.id}
+										note={note}
+										activateNote={onActivateNote}
+									/>
+								</Collapse>
+							))}
+						</TransitionGroup>
+					</Suspense>
 				</List>
 			</Drawer>
 		</Box>
