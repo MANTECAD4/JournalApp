@@ -11,7 +11,6 @@ export interface Note extends NotePayload {
 export interface journalState {
 	isLoading: boolean;
 	isSaving: boolean;
-	messageSaved: string;
 	notes: Note[];
 	activeNote: Note | null;
 }

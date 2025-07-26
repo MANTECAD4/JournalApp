@@ -9,13 +9,13 @@ import {
 	Divider,
 	Fab,
 	Grid,
-	IconButton,
 	TextField,
 	Typography,
 } from '@mui/material';
 import { ImageGallery } from '../components';
-import { useNote } from '../../hooks/useNote';
 import { AnimatePresence, motion } from 'motion/react';
+import { useNote } from '../../hooks/NoteView/useNote';
+import { green } from '@mui/material/colors';
 
 export const NoteView = () => {
 	const {
@@ -67,7 +67,7 @@ export const NoteView = () => {
 								<Button
 									type="submit"
 									disabled={isSaving || !isSaveEnabled}
-									sx={{ padding: 2, px: 3 }}
+									sx={{ padding: 2, px: 3, color: green[900] }}
 								>
 									<SaveOutlined />
 									Save

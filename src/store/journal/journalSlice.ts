@@ -5,7 +5,6 @@ const initialState: journalState = {
 	activeNote: null,
 	isLoading: false,
 	isSaving: false,
-	messageSaved: '',
 	notes: [],
 };
 export const journalSlice = createSlice({
@@ -27,6 +26,7 @@ export const journalSlice = createSlice({
 		},
 		setNotes: (state, action) => {
 			state.notes = action.payload;
+			state.isLoading = false;
 		},
 		updateNote: (state, action: PayloadAction<Note>) => {
 			state.activeNote = action.payload;
@@ -50,7 +50,20 @@ export const journalSlice = createSlice({
 			);
 			state.isSaving = false;
 		},
-		deleteNote: (state, action) => {},
+		deleteNote: (state, action: PayloadAction<Note>) => {
+			state.activeNote = null;
+			state.notes = state.notes.filter((note) => note.id !== action.payload.id);
+			state.isSaving = false;
+		},
+		closeNote: (state) => {
+			state.activeNote = null;
+		},
+		cleanJournal: (state) => {
+			state.activeNote = null;
+			state.isLoading = false;
+			state.isSaving = false;
+			state.notes = [];
+		},
 	},
 });
 export const journalActions = journalSlice.actions;

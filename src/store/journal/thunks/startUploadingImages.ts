@@ -8,7 +8,7 @@ export const startUploadingImages = (files: File[] = []): AppThunk => {
 	return async (dispatch, getState) => {
 		const { uid } = getState().auth;
 		const note = getState().journal.activeNote;
-		if (!uid || !note) return;
+		if (!uid || !note) throw new Error('Oops! Something went wrong.');
 		dispatch(journalActions.setIsSaving());
 		const fileUploadPromises: Promise<string>[] = [];
 		for (const file of files) {

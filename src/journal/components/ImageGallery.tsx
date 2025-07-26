@@ -35,7 +35,7 @@ export const ImageGallery = React.memo(({ images }: Props) => {
 					}}
 				>
 					<Typography variant="h5" fontFamily={'cursive'}>
-						xs
+						,.-~*´¨¯¨`*·~-.¸-Nothing over here-,.-~*´¨¯¨`*·~-.¸
 					</Typography>
 				</Box>
 			)}
