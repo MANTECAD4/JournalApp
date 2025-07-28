@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useAppDispatch, type RootState } from '../store/store';
 import { startCreatingUserWithEmailPassword } from '../store/auth/thunks';
-import type { RegisterInputs } from '../auth/pages/Types';
+import type { RegisterInputs } from '../features/auth/pages/Types';
 
 export const useRegister = () => {
 	const dispatch = useAppDispatch();

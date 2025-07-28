@@ -39,17 +39,6 @@ export const journalSlice = createSlice({
 			});
 			state.isSaving = false;
 		},
-		updateImageUrls: (state, action: PayloadAction<string[]>) => {
-			if (!state.activeNote) return;
-			const newImageUrls = action.payload;
-			state.activeNote.imageURLs = newImageUrls;
-			state.notes = state.notes.map((note) =>
-				note.id === state.activeNote!.id
-					? { ...note, imageURLs: newImageUrls }
-					: note
-			);
-			state.isSaving = false;
-		},
 		deleteNote: (state, action: PayloadAction<Note>) => {
 			state.activeNote = null;
 			state.notes = state.notes.filter((note) => note.id !== action.payload.id);

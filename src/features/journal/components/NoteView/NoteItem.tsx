@@ -7,8 +7,8 @@ import {
 	ListItemIcon,
 	ListItemText,
 } from '@mui/material';
-import type { Note } from '../../store/journal/journalSlice.types';
-import { getNotePreview } from '../../helpers/journal/getNotePreview';
+import type { Note } from '../../../../store/journal/journalSlice.types';
+import { getNotePreview } from '../../../../helpers/journal/getNotePreview';
 
 type Props = {
 	note: Note;

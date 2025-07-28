@@ -3,7 +3,7 @@ import type { RootState } from '../../store/store';
 import { useMemo, useRef } from 'react';
 
 /**
- * Required note values that are not directly-related to an important process
+ * Required note values that are not directly-related to a bigger process
  * @returns
  */
 export const useNoteDerivedValues = () => {
@@ -19,9 +19,7 @@ export const useNoteDerivedValues = () => {
 		});
 	}, [activeNote]);
 
-	const fileInputRef = useRef<HTMLInputElement>(null);
 	return {
-		fileInputRef,
 		styledDate,
 	};
 };

@@ -1,37 +1,57 @@
-import { Google, Login } from '@mui/icons-material';
-import {
-	Alert,
-	Button,
-	Grid,
-	Link,
-	TextField,
-	Typography,
-} from '@mui/material';
 import { Link as RouterLink } from 'react-router';
+import { useRegister } from '../../../hooks';
 import { AuthLayout } from '../layout/AuthLayout';
-import { useLogin } from '../../hooks';
+import {
+	Grid,
+	TextField,
+	Button,
+	Typography,
+	Link,
+	Alert,
+} from '@mui/material';
+import { AppRegistration } from '@mui/icons-material';
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
 	const {
+		errorMessage,
 		errors,
 		handleSubmit,
-		onGoogleSignIn,
 		onSubmit,
 		register,
-		status,
-		errorMessage,
-	} = useLogin();
+		isCheckingAuth,
+	} = useRegister();
 
 	return (
-		<AuthLayout title="Login">
+		<AuthLayout title="Register">
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Grid container direction="column" spacing={1}>
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
+							autoComplete="displayName"
+							fullWidth
+							label="Name"
+							placeholder="John Doe"
+							type="text"
+							{...register('displayName', {
+								required: 'Name required',
+								minLength: { value: 1, message: 'Invalid length' },
+								pattern: {
+									value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,}$/,
+									message: 'Invalid name',
+								},
+							})}
+							error={!!errors.displayName}
+							helperText={errors.displayName?.message}
+						/>
+					</Grid>
+
+					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
+						<TextField
 							autoComplete="email"
 							fullWidth
-							label="email"
+							label="Email"
 							placeholder="example@gmail.com"
+							type="email"
 							{...register('email', {
 								required: 'An email address is required',
 								minLength: { value: 6, message: '' },
@@ -42,10 +62,8 @@ export const LoginPage = () => {
 							})}
 							error={!!errors.email}
 							helperText={errors.email?.message}
-							type="email"
 						/>
 					</Grid>
-
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
 							autoComplete="current-password"
@@ -79,50 +97,29 @@ export const LoginPage = () => {
 						<Alert severity="error">{errorMessage}</Alert>
 					</Grid>
 
-					<Grid container sx={{ mt: 2 }} spacing={2}>
-						<Grid
-							sx={{
-								gridColumn: { xs: 'span 12', sm: 'span 6' },
-								width: '100%',
-							}}
+					{/* Create account button */}
+					<Grid
+						sx={{
+							gridColumn: { xs: 'span 12', sm: 'span 6' },
+							width: '100%',
+							mt: 2,
+						}}
+					>
+						<Button
+							disabled={isCheckingAuth}
+							type="submit"
+							fullWidth
+							sx={{ backgroundColor: 'secondary.main' }}
+							variant="contained"
 						>
-							<Button
-								disabled={status === 'checking'}
-								type="submit"
-								fullWidth
-								sx={{ backgroundColor: 'secondary.main' }}
-								variant="contained"
-							>
-								<Login />
-								<Typography sx={{ ml: 1 }}>Log In</Typography>
-							</Button>
-						</Grid>
-						<Grid
-							sx={{
-								gridColumn: { xs: 'span 12', sm: 'span 6' },
-								width: '100%',
-							}}
-						>
-							<Button
-								disabled={status === 'checking'}
-								onClick={onGoogleSignIn}
-								fullWidth
-								sx={{ backgroundColor: 'secondary.main' }}
-								variant="contained"
-							>
-								<Google />
-								<Typography sx={{ ml: 1 }}>Sign up</Typography>
-							</Button>
-						</Grid>
+							<AppRegistration />
+							<Typography sx={{ ml: 1 }}>Create account</Typography>
+						</Button>
 					</Grid>
-
-					<Grid container direction="row" sx={{ justifyContent: 'end', mt: 2 }}>
-						<Link
-							component={RouterLink}
-							to="/auth/register"
-							sx={{ color: 'inherit' }}
-						>
-							Create an account
+					<Grid container direction="row" sx={{ justifyContent: 'end', mt: 1 }}>
+						<Typography sx={{ mr: 1 }}>Already have an account?</Typography>
+						<Link component={RouterLink} to="/auth/login" color="inherit">
+							Login
 						</Link>
 					</Grid>
 				</Grid>

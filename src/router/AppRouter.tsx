@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
-import { AuthRoutes } from '../auth/routes/AuthRoutes';
-import { JournalRoutes } from '../journal/routes/JournalRoutes';
-import { CheckingAuthLoader } from '../auth/pages/CheckingAuthLoader';
+import { AuthRoutes } from '../features/auth/routes/AuthRoutes';
+import { JournalRoutes } from '../features/journal/routes/JournalRoutes';
+import { CheckingAuthLoader } from '../features/auth/pages/CheckingAuthLoader';
 import { useAuth } from '../hooks/useAuth';
 import { PublicRoutes } from './PublicRoutes';
 import { PrivateRoutes } from './PrivateRoutes';

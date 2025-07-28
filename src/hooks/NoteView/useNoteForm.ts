@@ -12,8 +12,8 @@ import type { NoteViewTextFields } from './useNote.types';
 export const useNoteForm = () => {
 	const { activeNote } = useSelector((state: RootState) => state.journal);
 	const [draftForm, setDraftForm] = useState({
-		title: activeNote?.title,
-		body: activeNote?.body,
+		title: activeNote?.title || '',
+		body: activeNote?.body || '',
 	});
 
 	const currentNotePayload = {
@@ -34,7 +34,10 @@ export const useNoteForm = () => {
 
 	const title = watch('title');
 	const body = watch('body');
-	const isSaveEnabled = title.trim().length > 0 || body.trim().length > 0;
+	const isSaveEnabled =
+		title.trim().length > 0 ||
+		body.trim().length > 0 ||
+		activeNote!.imageURLs.length > 0;
 
 	// ========= Debounced Draft Sync =========
 	const memoFormState = useMemo(() => ({ title, body }), [title, body]);
@@ -55,7 +58,7 @@ export const useNoteForm = () => {
 	}, [activeNote, reset]);
 
 	return {
-		handleSubmit,
+		draftForm,
 		isSaveEnabled,
 		isUpToDate,
 		register,

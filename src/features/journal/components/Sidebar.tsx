@@ -9,12 +9,12 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { useAppDispatch, type RootState } from '../../store/store';
-import { NoteItem } from './NoteItem';
-import type { Note } from '../../store/journal/journalSlice.types';
-import { journalActions } from '../../store/journal/journalSlice';
+import { useAppDispatch, type RootState } from '../../../store/store';
+import type { Note } from '../../../store/journal/journalSlice.types';
+import { journalActions } from '../../../store/journal/journalSlice';
 import { Suspense, useCallback } from 'react';
 import { TransitionGroup } from 'react-transition-group';
+import { NoteItem } from './NoteView/NoteItem';
 
 type Props = {
 	drawerWidth?: number;

@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import CircularText from '../../ui/components/CircularText/CircularText/CircularText';
-import { useAppDispatch, type RootState } from '../../store/store';
-import { startCreatingEmptyNote } from '../../store/journal/thunks';
+import CircularText from '../../../ui/components/CircularText/CircularText/CircularText';
+import { useAppDispatch, type RootState } from '../../../store/store';
+import { startCreatingEmptyNote } from '../../../store/journal/thunks';
 
 export const NothingSelectedView = () => {
 	const { isSaving } = useSelector((state: RootState) => state.journal);

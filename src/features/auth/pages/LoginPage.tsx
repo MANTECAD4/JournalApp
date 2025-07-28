@@ -1,57 +1,37 @@
-import { Link as RouterLink } from 'react-router';
-import { useRegister } from '../../hooks';
-import { AuthLayout } from '../layout/AuthLayout';
+import { Google, Login } from '@mui/icons-material';
 import {
-	Grid,
-	TextField,
-	Button,
-	Typography,
-	Link,
 	Alert,
+	Button,
+	Grid,
+	Link,
+	TextField,
+	Typography,
 } from '@mui/material';
-import { AppRegistration } from '@mui/icons-material';
+import { Link as RouterLink } from 'react-router';
+import { AuthLayout } from '../layout/AuthLayout';
+import { useLogin } from '../../../hooks';
 
-export const RegisterPage = () => {
+export const LoginPage = () => {
 	const {
-		errorMessage,
 		errors,
 		handleSubmit,
+		onGoogleSignIn,
 		onSubmit,
 		register,
-		isCheckingAuth,
-	} = useRegister();
+		status,
+		errorMessage,
+	} = useLogin();
 
 	return (
-		<AuthLayout title="Register">
+		<AuthLayout title="Login">
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Grid container direction="column" spacing={1}>
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
-							autoComplete="displayName"
-							fullWidth
-							label="Name"
-							placeholder="John Doe"
-							type="text"
-							{...register('displayName', {
-								required: 'Name required',
-								minLength: { value: 1, message: 'Invalid length' },
-								pattern: {
-									value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,}$/,
-									message: 'Invalid name',
-								},
-							})}
-							error={!!errors.displayName}
-							helperText={errors.displayName?.message}
-						/>
-					</Grid>
-
-					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
-						<TextField
 							autoComplete="email"
 							fullWidth
-							label="Email"
+							label="email"
 							placeholder="example@gmail.com"
-							type="email"
 							{...register('email', {
 								required: 'An email address is required',
 								minLength: { value: 6, message: '' },
@@ -62,8 +42,10 @@ export const RegisterPage = () => {
 							})}
 							error={!!errors.email}
 							helperText={errors.email?.message}
+							type="email"
 						/>
 					</Grid>
+
 					<Grid sx={{ gridColumn: { xs: 'span 12' }, mt: 1 }}>
 						<TextField
 							autoComplete="current-password"
@@ -97,29 +79,50 @@ export const RegisterPage = () => {
 						<Alert severity="error">{errorMessage}</Alert>
 					</Grid>
 
-					{/* Create account button */}
-					<Grid
-						sx={{
-							gridColumn: { xs: 'span 12', sm: 'span 6' },
-							width: '100%',
-							mt: 2,
-						}}
-					>
-						<Button
-							disabled={isCheckingAuth}
-							type="submit"
-							fullWidth
-							sx={{ backgroundColor: 'secondary.main' }}
-							variant="contained"
+					<Grid container sx={{ mt: 2 }} spacing={2}>
+						<Grid
+							sx={{
+								gridColumn: { xs: 'span 12', sm: 'span 6' },
+								width: '100%',
+							}}
 						>
-							<AppRegistration />
-							<Typography sx={{ ml: 1 }}>Create account</Typography>
-						</Button>
+							<Button
+								disabled={status === 'checking'}
+								type="submit"
+								fullWidth
+								sx={{ backgroundColor: 'secondary.main' }}
+								variant="contained"
+							>
+								<Login />
+								<Typography sx={{ ml: 1 }}>Log In</Typography>
+							</Button>
+						</Grid>
+						<Grid
+							sx={{
+								gridColumn: { xs: 'span 12', sm: 'span 6' },
+								width: '100%',
+							}}
+						>
+							<Button
+								disabled={status === 'checking'}
+								onClick={onGoogleSignIn}
+								fullWidth
+								sx={{ backgroundColor: 'secondary.main' }}
+								variant="contained"
+							>
+								<Google />
+								<Typography sx={{ ml: 1 }}>Sign up</Typography>
+							</Button>
+						</Grid>
 					</Grid>
-					<Grid container direction="row" sx={{ justifyContent: 'end', mt: 1 }}>
-						<Typography sx={{ mr: 1 }}>Already have an account?</Typography>
-						<Link component={RouterLink} to="/auth/login" color="inherit">
-							Login
+
+					<Grid container direction="row" sx={{ justifyContent: 'end', mt: 2 }}>
+						<Link
+							component={RouterLink}
+							to="/auth/register"
+							sx={{ color: 'inherit' }}
+						>
+							Create an account
 						</Link>
 					</Grid>
 				</Grid>
