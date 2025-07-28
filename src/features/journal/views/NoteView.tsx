@@ -53,7 +53,7 @@ export const NoteView = () => {
 								isSaveEnabled={isSaveEnabled}
 								isUpToDate={isUpToDate}
 							/>
-							<CloseNoteButton isSaving={isSaving} />
+							<CloseNoteButton isSaving={isSaving} isUpToDate={isUpToDate} />
 							<DeleteNoteButton isSaving={isSaving} isUpToDate={isUpToDate} />
 						</Grid>
 					</Grid>
