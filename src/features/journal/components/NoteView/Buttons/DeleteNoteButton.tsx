@@ -2,14 +2,15 @@ import { DeleteOutline } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { DeleteModal } from '../DeleteModal';
 import { useState } from 'react';
-import { useAppDispatch } from '../../../../../store/store';
+import { useAppDispatch, type RootState } from '../../../../../store/store';
 import { toast } from 'react-toastify';
 import { startDeletingNote } from '../../../../../store/journal/thunks/startDeletingNote';
+import { useSelector } from 'react-redux';
 type Props = {
-	isSaving: boolean;
 	isUpToDate: boolean;
 };
-export const DeleteNoteButton = ({ isSaving, isUpToDate }: Props) => {
+export const DeleteNoteButton = ({ isUpToDate }: Props) => {
+	const { isSaving } = useSelector((state: RootState) => state.journal);
 	const dispatch = useAppDispatch();
 
 	// --- Delete Note ---

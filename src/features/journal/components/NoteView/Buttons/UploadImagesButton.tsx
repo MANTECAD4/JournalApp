@@ -12,11 +12,12 @@ type Props = {
 		title: string;
 		body: string;
 	};
-	isSaving: boolean;
 };
-export const UploadImagesButton = ({ isSaving, draftForm }: Props) => {
+export const UploadImagesButton = ({ draftForm }: Props) => {
 	const dispatch = useAppDispatch();
-	const { activeNote } = useSelector((state: RootState) => state.journal);
+	const { activeNote, isSaving } = useSelector(
+		(state: RootState) => state.journal
+	);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	// --- Upload Images ---

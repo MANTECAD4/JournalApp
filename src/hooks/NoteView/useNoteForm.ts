@@ -22,7 +22,10 @@ export const useNoteForm = () => {
 	};
 	// TODO: Enviar el borrador de la nota al estado global
 	const isUpToDate =
-		JSON.stringify(draftForm) === JSON.stringify(currentNotePayload);
+		JSON.stringify({
+			title: draftForm.title.trim(),
+			body: draftForm.body.trim(),
+		}) === JSON.stringify(currentNotePayload);
 
 	// ========= Form Setup =========
 	const { handleSubmit, register, reset, watch } = useForm<NoteViewTextFields>({

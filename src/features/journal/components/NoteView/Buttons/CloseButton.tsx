@@ -1,22 +1,40 @@
 import { CloseOutlined, WarningAmber } from '@mui/icons-material';
 import { Button, Grid, Popover, Typography } from '@mui/material';
 import { journalActions } from '../../../../../store/journal/journalSlice';
-import { useAppDispatch } from '../../../../../store/store';
+import { useAppDispatch, type RootState } from '../../../../../store/store';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { startUpdatingNote } from '../../../../../store/journal/thunks';
+import { toast } from 'react-toastify';
 type Props = {
-	isSaving: boolean;
+	draftForm: { title: string; body: string };
 	isUpToDate: boolean;
 };
-export const CloseNoteButton = ({ isSaving, isUpToDate }: Props) => {
+export const CloseNoteButton = ({ isUpToDate, draftForm }: Props) => {
+	const { isSaving, activeNote } = useSelector(
+		(state: RootState) => state.journal
+	);
 	const dispatch = useAppDispatch();
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 	const open = Boolean(anchorEl);
 	const id = open ? 'simple-popover' : undefined;
 
 	// --- Close Note ---
-	const onClosingNote = () => {
+	const onClosingNote = () => dispatch(journalActions.closeNote());
+	const onSaveNote = () => {
+		dispatch(
+			startUpdatingNote({
+				id: activeNote!.id,
+				date: activeNote!.date,
+				body: draftForm.body.trim(),
+				title: draftForm.title.trim(),
+				imageURLs: activeNote!.imageURLs,
+			})
+		);
 		dispatch(journalActions.closeNote());
+		toast.success('Note saved.');
 	};
+
 	return (
 		<>
 			{isUpToDate ? (
@@ -59,14 +77,12 @@ export const CloseNoteButton = ({ isSaving, isUpToDate }: Props) => {
 							direction={'row'}
 							alignItems={'center'}
 							sx={{ backgroundColor: 'primary.main', color: 'white', p: 2 }}
-							// sx={{ p: 2 }}
 						>
 							<WarningAmber fontSize="medium" />
 							<Typography sx={{ pl: 1 }}>You have unsaved changes.</Typography>
 						</Grid>
-						{/* <Divider sx={{ width: '100%', mb: 2 }} /> */}
 						<Grid container direction="row" justifyContent="space-around">
-							<Button size="large" sx={{ py: 2 }}>
+							<Button onClick={() => onSaveNote()} size="large" sx={{ py: 2 }}>
 								Save
 							</Button>
 							<Button

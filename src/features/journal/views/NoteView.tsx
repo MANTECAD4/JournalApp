@@ -1,5 +1,5 @@
 import { useNote } from '../../../hooks/NoteView/useNote';
-import { Divider, Grid, TextField, Typography } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 import { ImageGallery } from '../components';
 import { AnimatePresence, motion } from 'motion/react';
 import {
@@ -9,17 +9,13 @@ import {
 	UploadImagesButton,
 } from '../components/NoteView/Buttons/';
 import { FormTextFields } from '../components/NoteView/TextFields/FormTextFields';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../../store/store';
 
 export const NoteView = () => {
-	const {
-		activeNote,
-		draftForm,
-		isSaveEnabled,
-		isSaving,
-		isUpToDate,
-		register,
-		styledDate,
-	} = useNote();
+	const { activeNote } = useSelector((state: RootState) => state.journal);
+	const { draftForm, isSaveEnabled, isUpToDate, register, styledDate } =
+		useNote();
 
 	if (!activeNote) return;
 
@@ -52,13 +48,12 @@ export const NoteView = () => {
 						{/* Buttons group */}
 						<Grid>
 							<SaveNoteButton
-								isSaving={isSaving}
 								draftForm={draftForm}
 								isSaveEnabled={isSaveEnabled}
 								isUpToDate={isUpToDate}
 							/>
-							<CloseNoteButton isSaving={isSaving} isUpToDate={isUpToDate} />
-							<DeleteNoteButton isSaving={isSaving} isUpToDate={isUpToDate} />
+							<CloseNoteButton draftForm={draftForm} isUpToDate={isUpToDate} />
+							<DeleteNoteButton isUpToDate={isUpToDate} />
 						</Grid>
 					</Grid>
 
@@ -68,7 +63,7 @@ export const NoteView = () => {
 					{/* Masonr */}
 					<ImageGallery images={activeNote.imageURLs} />
 					{/* Upload images floating button */}
-					<UploadImagesButton isSaving={isSaving} draftForm={draftForm} />
+					<UploadImagesButton draftForm={draftForm} />
 				</Grid>
 			</motion.div>
 		</AnimatePresence>

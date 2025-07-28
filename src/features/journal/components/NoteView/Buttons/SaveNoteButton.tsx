@@ -9,18 +9,18 @@ type Props = {
 		title: string;
 		body: string;
 	};
-	isSaving: boolean;
 	isSaveEnabled: boolean;
 	isUpToDate: boolean;
 };
 export const SaveNoteButton = ({
 	draftForm,
-	isSaving,
 	isSaveEnabled,
 	isUpToDate,
 }: Props) => {
 	const dispatch = useAppDispatch();
-	const { activeNote } = useSelector((state: RootState) => state.journal);
+	const { activeNote, isSaving } = useSelector(
+		(state: RootState) => state.journal
+	);
 
 	const onUpdateNote = () => {
 		if (isUpToDate) {
