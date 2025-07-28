@@ -8,6 +8,7 @@ import {
 	SaveNoteButton,
 	UploadImagesButton,
 } from '../components/NoteView/Buttons/';
+import { FormTextFields } from '../components/NoteView/TextFields/FormTextFields';
 
 export const NoteView = () => {
 	const {
@@ -35,17 +36,20 @@ export const NoteView = () => {
 					className="animate__animated animate__fadeIn"
 					sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
 				>
+					{/* Header part of the view */}
 					<Grid
 						container
 						direction="row"
 						justifyContent="space-between"
 						sx={{ width: '100%' }}
 					>
+						{/* Date display */}
 						<Grid>
 							<Typography fontSize={39} fontFamily="cursive" fontWeight="light">
 								{styledDate}
 							</Typography>
 						</Grid>
+						{/* Buttons group */}
 						<Grid>
 							<SaveNoteButton
 								isSaving={isSaving}
@@ -57,53 +61,13 @@ export const NoteView = () => {
 							<DeleteNoteButton isSaving={isSaving} isUpToDate={isUpToDate} />
 						</Grid>
 					</Grid>
+
 					<Divider sx={{ width: '100%', mb: 2 }} />
-					{/* Text Fields */}
-					<Grid container sx={{ width: '100%' }}>
-						<TextField
-							type="text"
-							variant="outlined"
-							fullWidth
-							placeholder="Start with a title! Dear diary..."
-							{...register('title')}
-							// label="Title"
-							sx={{
-								border: 'none',
-								mb: 2,
-							}}
-							slotProps={{
-								htmlInput: {
-									sx: {
-										'::placeholder': {
-											fontFamily: 'Monsieur La Doulaise',
-											fontStyle: 'italic',
-										},
-									},
-								},
-							}}
-						/>
-						<TextField
-							type="text"
-							multiline
-							variant="outlined"
-							fullWidth
-							placeholder="What happened today??"
-							minRows={5}
-							{...register('body')}
-							sx={{ border: 'none', mb: 2 }}
-							slotProps={{
-								htmlInput: {
-									sx: {
-										'::placeholder': {
-											fontFamily: 'Monsieur La Doulaise',
-											fontStyle: 'italic',
-										},
-									},
-								},
-							}}
-						/>
-					</Grid>
+					{/* Form data */}
+					<FormTextFields register={register} />
+					{/* Masonr */}
 					<ImageGallery images={activeNote.imageURLs} />
+					{/* Upload images floating button */}
 					<UploadImagesButton isSaving={isSaving} draftForm={draftForm} />
 				</Grid>
 			</motion.div>

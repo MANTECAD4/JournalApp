@@ -38,7 +38,7 @@ export const SaveNoteButton = ({
 			})
 		);
 
-		toast.success('Note updated');
+		toast.success('Note saved.');
 	};
 	return (
 		<>

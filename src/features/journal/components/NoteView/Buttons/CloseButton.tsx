@@ -1,5 +1,5 @@
-import { CloseOutlined, PriorityHigh, WarningAmber } from '@mui/icons-material';
-import { Button, Divider, Grid, Popover, Typography } from '@mui/material';
+import { CloseOutlined, WarningAmber } from '@mui/icons-material';
+import { Button, Grid, Popover, Typography } from '@mui/material';
 import { journalActions } from '../../../../../store/journal/journalSlice';
 import { useAppDispatch } from '../../../../../store/store';
 import { useState } from 'react';
@@ -64,11 +64,25 @@ export const CloseNoteButton = ({ isSaving, isUpToDate }: Props) => {
 							<WarningAmber fontSize="medium" />
 							<Typography sx={{ pl: 1 }}>You have unsaved changes.</Typography>
 						</Grid>
-						<Divider sx={{ width: '100%', mb: 2 }} />
+						{/* <Divider sx={{ width: '100%', mb: 2 }} /> */}
 						<Grid container direction="row" justifyContent="space-around">
-							<Button>Save</Button>
-							<Button onClick={() => onClosingNote()}>Discard</Button>
-							<Button onClick={() => setAnchorEl(null)}>Cancel</Button>
+							<Button size="large" sx={{ py: 2 }}>
+								Save
+							</Button>
+							<Button
+								size="large"
+								sx={{ py: 1 }}
+								onClick={() => onClosingNote()}
+							>
+								Discard
+							</Button>
+							<Button
+								size="large"
+								sx={{ py: 1 }}
+								onClick={() => setAnchorEl(null)}
+							>
+								Cancel
+							</Button>
 						</Grid>
 					</Popover>
 				</>
