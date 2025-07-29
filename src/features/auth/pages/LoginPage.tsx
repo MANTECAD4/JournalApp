@@ -111,7 +111,7 @@ export const LoginPage = () => {
 								variant="contained"
 							>
 								<Google />
-								<Typography sx={{ ml: 1 }}>Sign up</Typography>
+								<Typography sx={{ ml: 1 }}>Continue with Google</Typography>
 							</Button>
 						</Grid>
 					</Grid>

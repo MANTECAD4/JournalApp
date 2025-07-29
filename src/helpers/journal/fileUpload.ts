@@ -13,9 +13,17 @@ export const fileUpload = async (file: File) => {
 		});
 		const cloudResp: CloundinaryResponse = await rawData.json();
 		console.log(cloudResp);
-		return cloudResp.secure_url;
+		return {
+			secure_url: cloudResp.secure_url,
+			id: cloudResp.asset_id,
+			name: cloudResp.original_filename,
+		};
 	} catch (error) {
 		console.warn(error);
-		return 'No url';
+		return {
+			secure_url: 'No url',
+			id: 'No id',
+			name: 'No name',
+		};
 	}
 };

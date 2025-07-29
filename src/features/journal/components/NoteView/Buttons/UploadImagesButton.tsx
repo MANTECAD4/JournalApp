@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { fileUpload } from '../../../../../helpers/journal/fileUpload';
 import { startUpdatingNote } from '../../../../../store/journal/thunks';
 import { toast } from 'react-toastify';
+import type { NoteImage } from '../../../../../store/journal/journalSlice.types';
 
 type Props = {
 	draftForm: {
@@ -26,7 +27,7 @@ export const UploadImagesButton = ({ draftForm }: Props) => {
 			const rawFiles = event.target.files;
 			if (!rawFiles || rawFiles.length === 0) return;
 			const files = Array.from(rawFiles);
-			const fileUploadPromises: Promise<string>[] = [];
+			const fileUploadPromises: Promise<NoteImage>[] = [];
 			for (const file of files) {
 				fileUploadPromises.push(fileUpload(file));
 			}

@@ -1,8 +1,10 @@
 import Box from '@mui/material/Box';
-import { ImageList, ImageListItem, Typography } from '@mui/material';
+import { ImageList, Typography } from '@mui/material';
 import React from 'react';
+import { NoteImageItem } from './NoteImageItem';
+import type { NoteImage } from '../../../../../store/journal/journalSlice.types';
 type Props = {
-	images: string[];
+	images: NoteImage[];
 };
 export const ImageGallery = React.memo(({ images }: Props) => {
 	return (
@@ -18,9 +20,7 @@ export const ImageGallery = React.memo(({ images }: Props) => {
 			{images.length > 0 ? (
 				<ImageList variant="masonry" cols={3} gap={8}>
 					{images.map((item) => (
-						<ImageListItem key={item}>
-							<img src={`${item}`} loading="lazy" />
-						</ImageListItem>
+						<NoteImageItem item={item} />
 					))}
 				</ImageList>
 			) : (
