@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useDebounce } from '@uidotdev/usehooks';
-import type { RootState } from '../../store/store';
+import { useAppDispatch, type RootState } from '../../store/store';
 import type { NoteViewTextFields } from './useNote.types';
+import { startUpdatingNote } from '../../store/journal/thunks';
 
 /**
  * NoteView Logic related to form
@@ -11,24 +12,15 @@ import type { NoteViewTextFields } from './useNote.types';
  */
 export const useNoteForm = () => {
 	const { activeNote } = useSelector((state: RootState) => state.journal);
-	const [draftForm, setDraftForm] = useState({
-		title: activeNote?.title || '',
-		body: activeNote?.body || '',
-	});
+	const dispatch = useAppDispatch();
 
 	const currentNotePayload = {
 		title: activeNote!.title,
 		body: activeNote!.body,
 	};
-	// TODO: Enviar el borrador de la nota al estado global
-	const isUpToDate =
-		JSON.stringify({
-			title: draftForm.title.trim(),
-			body: draftForm.body.trim(),
-		}) === JSON.stringify(currentNotePayload);
 
 	// ========= Form Setup =========
-	const { handleSubmit, register, reset, watch } = useForm<NoteViewTextFields>({
+	const { register, reset, watch } = useForm<NoteViewTextFields>({
 		defaultValues: {
 			title: activeNote!.title,
 			body: activeNote!.body,
@@ -37,18 +29,6 @@ export const useNoteForm = () => {
 
 	const title = watch('title');
 	const body = watch('body');
-	const isSaveEnabled =
-		title.trim().length > 0 ||
-		body.trim().length > 0 ||
-		activeNote!.imageURLs.length > 0;
-
-	// ========= Debounced Draft Sync =========
-	const memoFormState = useMemo(() => ({ title, body }), [title, body]);
-	const debouncedForm = useDebounce(memoFormState, 1000);
-
-	useEffect(() => {
-		setDraftForm(debouncedForm);
-	}, [debouncedForm]);
 
 	// ========= Form Sync on Note Change =========
 	useEffect(() => {
@@ -57,8 +37,42 @@ export const useNoteForm = () => {
 				title: activeNote.title,
 				body: activeNote.body,
 			});
+			// setDraftForm({
+			// 	title: activeNote.title,
+			// 	body: activeNote.body,
+			// });
 		}
 	}, [activeNote, reset]);
+
+	const [draftForm, setDraftForm] = useState({
+		title: activeNote?.title || '',
+		body: activeNote?.body || '',
+	});
+
+	// ========= Debounced Draft Sync =========
+	const memoFormState = useMemo(() => ({ title, body }), [title, body]);
+	const debouncedForm = useDebounce(memoFormState, 1500);
+
+	useEffect(() => {
+		setDraftForm(debouncedForm);
+	}, [debouncedForm]);
+
+	const isUpToDate = useMemo(
+		() =>
+			JSON.stringify({
+				title: draftForm.title.trim(),
+				body: draftForm.body.trim(),
+			}) === JSON.stringify(currentNotePayload),
+		[draftForm, currentNotePayload]
+	);
+
+	const isSaveEnabled = useMemo(
+		() =>
+			title.trim().length > 0 ||
+			body.trim().length > 0 ||
+			activeNote!.imageUrls.length > 0,
+		[title, body, activeNote]
+	);
 
 	return {
 		draftForm,

@@ -1,5 +1,5 @@
 import { useNote } from '../../../hooks/NoteView/useNote';
-import { Divider, Grid, Typography } from '@mui/material';
+import { Chip, Divider, Grid, Typography } from '@mui/material';
 import { ImageGallery } from '../components';
 import { AnimatePresence, motion } from 'motion/react';
 import {
@@ -11,9 +11,12 @@ import {
 import { FormTextFields } from '../components/NoteView/TextFields/FormTextFields';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../store/store';
+import { CloudDone, CloudSync } from '@mui/icons-material';
 
 export const NoteView = () => {
-	const { activeNote } = useSelector((state: RootState) => state.journal);
+	const { activeNote, isSaving } = useSelector(
+		(state: RootState) => state.journal
+	);
 	const { draftForm, isSaveEnabled, isUpToDate, register, styledDate } =
 		useNote();
 
@@ -40,10 +43,43 @@ export const NoteView = () => {
 						sx={{ width: '100%' }}
 					>
 						{/* Date display */}
-						<Grid>
-							<Typography fontSize={39} fontFamily="cursive" fontWeight="light">
+						<Grid
+							container
+							direction={'row'}
+							alignItems={'center'}
+							justifyContent={'center'}
+						>
+							<Typography
+								sx={{ mr: 2 }}
+								fontSize={39}
+								fontFamily="cursive"
+								fontWeight="light"
+							>
 								{styledDate}
 							</Typography>
+							{isSaving ? (
+								<Chip
+									title="Saving changes..."
+									color="warning"
+									size="medium"
+									variant="outlined"
+									icon={<CloudSync />}
+									label="SAVING"
+									clickable={false}
+									onClick={() => {}}
+								/>
+							) : (
+								<Chip
+									title={`Everything's up to date`}
+									color="success"
+									size="medium"
+									variant="outlined"
+									icon={<CloudDone />}
+									label="SAVED"
+									clickable={false}
+									onClick={() => {}}
+								/>
+							)}
 						</Grid>
 						{/* Buttons group */}
 						<Grid>
@@ -52,6 +88,7 @@ export const NoteView = () => {
 								isSaveEnabled={isSaveEnabled}
 								isUpToDate={isUpToDate}
 							/>
+
 							<CloseNoteButton draftForm={draftForm} isUpToDate={isUpToDate} />
 							<DeleteNoteButton isUpToDate={isUpToDate} />
 						</Grid>
@@ -61,7 +98,7 @@ export const NoteView = () => {
 					{/* Form data */}
 					<FormTextFields register={register} />
 					{/* Masonr */}
-					<ImageGallery images={activeNote.imageURLs} />
+					<ImageGallery images={activeNote.imageUrls} />
 					{/* Upload images floating button */}
 					<UploadImagesButton draftForm={draftForm} />
 				</Grid>

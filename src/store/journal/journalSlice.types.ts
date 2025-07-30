@@ -10,7 +10,7 @@ export interface NotePayload {
 export interface Note extends NotePayload {
 	id: string;
 	date: number;
-	imageURLs: NoteImage[];
+	imageUrls: NoteImage[];
 }
 
 export interface journalState {
@@ -18,4 +18,5 @@ export interface journalState {
 	isSaving: boolean;
 	notes: Note[];
 	activeNote: Note | null;
+	draftNote: { title: string; body: string } | null;
 }

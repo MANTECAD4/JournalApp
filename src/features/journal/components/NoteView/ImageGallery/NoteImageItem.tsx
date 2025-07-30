@@ -1,16 +1,16 @@
 import { Close } from '@mui/icons-material';
 import { IconButton, ImageListItem, ImageListItemBar } from '@mui/material';
-import type { NoteImage } from '../../../../../store/journal/journalSlice.types';
-import { act, useState } from 'react';
+import React, { useState } from 'react';
 import { useAppDispatch, type RootState } from '../../../../../store/store';
 import { startUpdatingNote } from '../../../../../store/journal/thunks';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import type { NoteImage } from '../../../../../store/journal/journalSlice.types';
 
 type Props = {
 	item: NoteImage;
 };
-export const NoteImageItem = ({ item }: Props) => {
+export const NoteImageItem = React.memo(({ item }: Props) => {
 	const dispatch = useAppDispatch();
 
 	const { activeNote, isSaving } = useSelector(
@@ -21,11 +21,9 @@ export const NoteImageItem = ({ item }: Props) => {
 	const onDeleteImage = (imageId: string) => {
 		dispatch(
 			startUpdatingNote({
-				id: activeNote!.id,
-				date: activeNote!.date,
 				body: activeNote!.body,
 				title: activeNote!.title.trim(),
-				imageURLs: activeNote!.imageURLs.filter(
+				imageUrls: activeNote!.imageUrls.filter(
 					(image) => image.id !== imageId
 				),
 			})
@@ -62,4 +60,4 @@ export const NoteImageItem = ({ item }: Props) => {
 			/>
 		</ImageListItem>
 	);
-};
+});

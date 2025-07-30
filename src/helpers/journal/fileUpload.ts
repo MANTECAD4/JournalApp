@@ -12,7 +12,6 @@ export const fileUpload = async (file: File) => {
 			body: formData,
 		});
 		const cloudResp: CloundinaryResponse = await rawData.json();
-		console.log(cloudResp);
 		return {
 			secure_url: cloudResp.secure_url,
 			id: cloudResp.asset_id,

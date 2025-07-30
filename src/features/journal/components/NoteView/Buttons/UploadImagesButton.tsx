@@ -32,16 +32,14 @@ export const UploadImagesButton = ({ draftForm }: Props) => {
 				fileUploadPromises.push(fileUpload(file));
 			}
 
-			const { imageURLs: prevImages } = activeNote!;
+			const { imageUrls: prevImages } = activeNote!;
 			const CloudinaryImageURLs = await Promise.all(fileUploadPromises);
-			const imageURLs = CloudinaryImageURLs.concat(prevImages);
+			const newImageUrls = CloudinaryImageURLs.concat(prevImages);
 			dispatch(
 				startUpdatingNote({
-					id: activeNote!.id,
-					date: activeNote!.date,
 					body: draftForm.body.trim(),
 					title: draftForm.title.trim(),
-					imageURLs,
+					imageUrls: newImageUrls,
 				})
 			);
 			toast.success('Images successfully loaded.');

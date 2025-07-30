@@ -26,7 +26,7 @@ export const startCreatingEmptyNote = (): AppThunk => {
 			title: '', // Título vacío por defecto
 			body: '', // Cuerpo vacío por defecto
 			date: new Date().getTime(), // Timestamp actual (en milisegundos)
-			imageURLs: [],
+			imageUrls: [],
 		};
 
 		// 6. Guarda el documento en Firestore en la ruta generada (con el contenido definido)

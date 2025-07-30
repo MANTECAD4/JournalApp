@@ -28,7 +28,7 @@ export const CloseNoteButton = ({ isUpToDate, draftForm }: Props) => {
 				date: activeNote!.date,
 				body: draftForm.body.trim(),
 				title: draftForm.title.trim(),
-				imageURLs: activeNote!.imageURLs,
+				imageUrls: activeNote!.imageUrls,
 			})
 		);
 		dispatch(journalActions.closeNote());

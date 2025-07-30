@@ -20,7 +20,7 @@ export const ImageGallery = React.memo(({ images }: Props) => {
 			{images.length > 0 ? (
 				<ImageList variant="masonry" cols={3} gap={8}>
 					{images.map((item) => (
-						<NoteImageItem item={item} />
+						<NoteImageItem key={item.id} item={item} />
 					))}
 				</ImageList>
 			) : (

@@ -18,9 +18,7 @@ export const SaveNoteButton = ({
 	isUpToDate,
 }: Props) => {
 	const dispatch = useAppDispatch();
-	const { activeNote, isSaving } = useSelector(
-		(state: RootState) => state.journal
-	);
+	const { isSaving } = useSelector((state: RootState) => state.journal);
 
 	const onUpdateNote = () => {
 		if (isUpToDate) {
@@ -30,11 +28,8 @@ export const SaveNoteButton = ({
 
 		dispatch(
 			startUpdatingNote({
-				id: activeNote!.id,
-				date: activeNote!.date,
 				body: draftForm.body.trim(),
 				title: draftForm.title.trim(),
-				imageURLs: activeNote!.imageURLs,
 			})
 		);
 
