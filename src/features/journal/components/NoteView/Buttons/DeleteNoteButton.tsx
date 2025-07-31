@@ -6,19 +6,13 @@ import { useAppDispatch, type RootState } from '../../../../../store/store';
 import { toast } from 'react-toastify';
 import { startDeletingNote } from '../../../../../store/journal/thunks/startDeletingNote';
 import { useSelector } from 'react-redux';
-type Props = {
-	isUpToDate: boolean;
-};
-export const DeleteNoteButton = ({ isUpToDate }: Props) => {
+
+export const DeleteNoteButton = () => {
 	const { isSaving } = useSelector((state: RootState) => state.journal);
 	const dispatch = useAppDispatch();
 
 	// --- Delete Note ---
 	const onDeleteNote = () => {
-		if (!isUpToDate) {
-			toast.warn(`You have unsaved changes.`);
-			return;
-		}
 		try {
 			dispatch(startDeletingNote());
 			toast.success('Note deleted');

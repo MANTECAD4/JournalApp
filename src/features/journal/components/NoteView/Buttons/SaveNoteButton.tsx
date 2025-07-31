@@ -21,10 +21,10 @@ export const SaveNoteButton = ({
 	const { isSaving } = useSelector((state: RootState) => state.journal);
 
 	const onUpdateNote = () => {
-		if (isUpToDate) {
-			toast.success(`Everything's up to date.`);
-			return;
-		}
+		// if (isUpToDate) {
+		// 	toast.success(`Everything's up to date.`);
+		// 	return;
+		// }
 
 		dispatch(
 			startUpdatingNote({

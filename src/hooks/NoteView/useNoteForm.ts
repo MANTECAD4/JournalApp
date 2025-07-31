@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useDebounce } from '@uidotdev/usehooks';
 import { useAppDispatch, type RootState } from '../../store/store';
 import type { NoteViewTextFields } from './useNote.types';
 import { startUpdatingNote } from '../../store/journal/thunks';
-
 /**
  * NoteView Logic related to form
  * @returns
@@ -13,11 +12,6 @@ import { startUpdatingNote } from '../../store/journal/thunks';
 export const useNoteForm = () => {
 	const { activeNote } = useSelector((state: RootState) => state.journal);
 	const dispatch = useAppDispatch();
-
-	const currentNotePayload = {
-		title: activeNote!.title,
-		body: activeNote!.body,
-	};
 
 	// ========= Form Setup =========
 	const { register, reset, watch } = useForm<NoteViewTextFields>({
@@ -30,42 +24,6 @@ export const useNoteForm = () => {
 	const title = watch('title');
 	const body = watch('body');
 
-	// ========= Form Sync on Note Change =========
-	useEffect(() => {
-		if (activeNote) {
-			reset({
-				title: activeNote.title,
-				body: activeNote.body,
-			});
-			// setDraftForm({
-			// 	title: activeNote.title,
-			// 	body: activeNote.body,
-			// });
-		}
-	}, [activeNote, reset]);
-
-	const [draftForm, setDraftForm] = useState({
-		title: activeNote?.title || '',
-		body: activeNote?.body || '',
-	});
-
-	// ========= Debounced Draft Sync =========
-	const memoFormState = useMemo(() => ({ title, body }), [title, body]);
-	const debouncedForm = useDebounce(memoFormState, 1500);
-
-	useEffect(() => {
-		setDraftForm(debouncedForm);
-	}, [debouncedForm]);
-
-	const isUpToDate = useMemo(
-		() =>
-			JSON.stringify({
-				title: draftForm.title.trim(),
-				body: draftForm.body.trim(),
-			}) === JSON.stringify(currentNotePayload),
-		[draftForm, currentNotePayload]
-	);
-
 	const isSaveEnabled = useMemo(
 		() =>
 			title.trim().length > 0 ||
@@ -73,11 +31,26 @@ export const useNoteForm = () => {
 			activeNote!.imageUrls.length > 0,
 		[title, body, activeNote]
 	);
+	// ========= Form Sync on Note Change =========
+	useEffect(() => {
+		if (activeNote) {
+			reset({
+				title: activeNote.title,
+				body: activeNote.body,
+			});
+		}
+	}, [activeNote, reset]);
+
+	// ========= Debounced Draft Sync =========
+	const memoFormState = useMemo(() => ({ title, body }), [title, body]);
+	const debouncedForm = useDebounce(memoFormState, 1500);
+
+	useEffect(() => {
+		if (isSaveEnabled) dispatch(startUpdatingNote(debouncedForm));
+	}, [debouncedForm]);
 
 	return {
-		draftForm,
 		isSaveEnabled,
-		isUpToDate,
 		register,
 	};
 };

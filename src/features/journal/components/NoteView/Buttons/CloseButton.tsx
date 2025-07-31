@@ -4,13 +4,8 @@ import { journalActions } from '../../../../../store/journal/journalSlice';
 import { useAppDispatch, type RootState } from '../../../../../store/store';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { startUpdatingNote } from '../../../../../store/journal/thunks';
-import { toast } from 'react-toastify';
-type Props = {
-	draftForm: { title: string; body: string };
-	isUpToDate: boolean;
-};
-export const CloseNoteButton = ({ isUpToDate, draftForm }: Props) => {
+
+export const CloseNoteButton = () => {
 	const { isSaving, activeNote } = useSelector(
 		(state: RootState) => state.journal
 	);
@@ -21,32 +16,30 @@ export const CloseNoteButton = ({ isUpToDate, draftForm }: Props) => {
 
 	// --- Close Note ---
 	const onClosingNote = () => dispatch(journalActions.closeNote());
-	const onSaveNote = () => {
-		dispatch(
-			startUpdatingNote({
-				id: activeNote!.id,
-				date: activeNote!.date,
-				body: draftForm.body.trim(),
-				title: draftForm.title.trim(),
-				imageUrls: activeNote!.imageUrls,
-			})
-		);
-		dispatch(journalActions.closeNote());
-		toast.success('Note saved.');
-	};
+	// const onSaveNote = () => {
+	// 	dispatch(
+	// 		startUpdatingNote({
+	// 			body: draftForm.body.trim(),
+	// 			title: draftForm.title.trim(),
+	// 			imageUrls: activeNote!.imageUrls,
+	// 		})
+	// 	);
+	// 	dispatch(journalActions.closeNote());
+	// 	toast.success('Note saved.');
+	// };
 
 	return (
 		<>
-			{isUpToDate ? (
-				<Button
-					size="large"
-					disabled={isSaving}
-					onClick={() => onClosingNote()}
-					sx={{ px: 3, py: 2, alignItems: 'center' }}
-				>
-					<CloseOutlined />
-					Close
-				</Button>
+			<Button
+				size="large"
+				disabled={isSaving}
+				onClick={() => onClosingNote()}
+				sx={{ px: 3, py: 2, alignItems: 'center' }}
+			>
+				<CloseOutlined />
+				Close
+			</Button>
+			{/* {isUpToDate ? (
 			) : (
 				<>
 					<Button
@@ -102,7 +95,7 @@ export const CloseNoteButton = ({ isUpToDate, draftForm }: Props) => {
 						</Grid>
 					</Popover>
 				</>
-			)}
+			)} */}
 		</>
 	);
 };

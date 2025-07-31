@@ -3,7 +3,6 @@ import type { journalState, Note } from './journalSlice.types';
 
 const initialState: journalState = {
 	activeNote: null,
-	draftNote: null,
 	isLoading: false,
 	isSaving: false,
 	notes: [],
@@ -24,10 +23,6 @@ export const journalSlice = createSlice({
 		},
 		setActiveNote: (state, { payload }: PayloadAction<Note>) => {
 			state.activeNote = payload;
-			state.draftNote = { title: payload.title, body: payload.body };
-		},
-		setDraftNote: (state, { payload }) => {
-			state.draftNote = { title: payload.title, body: payload.body };
 		},
 		setNotes: (state, action) => {
 			state.notes = action.payload;
@@ -47,16 +42,13 @@ export const journalSlice = createSlice({
 		deleteNote: (state, action: PayloadAction<Note>) => {
 			state.notes = state.notes.filter((note) => note.id !== action.payload.id);
 			state.activeNote = null;
-			state.draftNote = null;
 			state.isSaving = false;
 		},
 		closeNote: (state) => {
 			state.activeNote = null;
-			state.draftNote = null;
 		},
 		cleanJournal: (state) => {
 			state.activeNote = null;
-			state.draftNote = null;
 			state.isLoading = false;
 			state.isSaving = false;
 			state.notes = [];

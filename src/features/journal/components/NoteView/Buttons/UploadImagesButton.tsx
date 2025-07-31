@@ -7,14 +7,7 @@ import { fileUpload } from '../../../../../helpers/journal/fileUpload';
 import { startUpdatingNote } from '../../../../../store/journal/thunks';
 import { toast } from 'react-toastify';
 import type { NoteImage } from '../../../../../store/journal/journalSlice.types';
-
-type Props = {
-	draftForm: {
-		title: string;
-		body: string;
-	};
-};
-export const UploadImagesButton = ({ draftForm }: Props) => {
+export const UploadImagesButton = () => {
 	const dispatch = useAppDispatch();
 	const { activeNote, isSaving } = useSelector(
 		(state: RootState) => state.journal
@@ -37,8 +30,8 @@ export const UploadImagesButton = ({ draftForm }: Props) => {
 			const newImageUrls = CloudinaryImageURLs.concat(prevImages);
 			dispatch(
 				startUpdatingNote({
-					body: draftForm.body.trim(),
-					title: draftForm.title.trim(),
+					body: activeNote!.body.trim(),
+					title: activeNote!.title.trim(),
 					imageUrls: newImageUrls,
 				})
 			);

@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from 'motion/react';
 import {
 	CloseNoteButton,
 	DeleteNoteButton,
-	SaveNoteButton,
 	UploadImagesButton,
 } from '../components/NoteView/Buttons/';
 import { FormTextFields } from '../components/NoteView/TextFields/FormTextFields';
@@ -17,8 +16,7 @@ export const NoteView = () => {
 	const { activeNote, isSaving } = useSelector(
 		(state: RootState) => state.journal
 	);
-	const { draftForm, isSaveEnabled, isUpToDate, register, styledDate } =
-		useNote();
+	const { register, styledDate } = useNote();
 
 	if (!activeNote) return;
 
@@ -83,14 +81,8 @@ export const NoteView = () => {
 						</Grid>
 						{/* Buttons group */}
 						<Grid>
-							<SaveNoteButton
-								draftForm={draftForm}
-								isSaveEnabled={isSaveEnabled}
-								isUpToDate={isUpToDate}
-							/>
-
-							<CloseNoteButton draftForm={draftForm} isUpToDate={isUpToDate} />
-							<DeleteNoteButton isUpToDate={isUpToDate} />
+							<CloseNoteButton />
+							<DeleteNoteButton />
 						</Grid>
 					</Grid>
 
@@ -100,7 +92,7 @@ export const NoteView = () => {
 					{/* Masonr */}
 					<ImageGallery images={activeNote.imageUrls} />
 					{/* Upload images floating button */}
-					<UploadImagesButton draftForm={draftForm} />
+					<UploadImagesButton />
 				</Grid>
 			</motion.div>
 		</AnimatePresence>

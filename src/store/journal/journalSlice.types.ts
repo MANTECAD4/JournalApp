@@ -18,5 +18,4 @@ export interface journalState {
 	isSaving: boolean;
 	notes: Note[];
 	activeNote: Note | null;
-	draftNote: { title: string; body: string } | null;
 }
