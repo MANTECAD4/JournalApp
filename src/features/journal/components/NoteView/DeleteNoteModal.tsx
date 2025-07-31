@@ -17,7 +17,7 @@ const modalStyle = {
 	boxShadow: 24,
 	p: 4,
 };
-export const DeleteModal = ({ onDeleteNote, isOpen, setIsOpen }: Props) => {
+export const DeleteNoteModal = ({ onDeleteNote, isOpen, setIsOpen }: Props) => {
 	return (
 		<>
 			<Modal

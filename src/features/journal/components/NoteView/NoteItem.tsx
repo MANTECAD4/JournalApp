@@ -9,6 +9,8 @@ import {
 } from '@mui/material';
 import type { Note } from '../../../../store/journal/journalSlice.types';
 import { getNotePreview } from '../../../../helpers/journal/getNotePreview';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/store/store';
 
 type Props = {
 	note: Note;
@@ -16,9 +18,10 @@ type Props = {
 };
 
 export const NoteItem = React.memo(({ note, activateNote }: Props) => {
+	const { isSaving } = useSelector((state: RootState) => state.journal);
 	return (
 		<ListItem disablePadding>
-			<ListItemButton onClick={() => activateNote(note)}>
+			<ListItemButton disabled={isSaving} onClick={() => activateNote(note)}>
 				<ListItemIcon>
 					<TurnedInNot />
 				</ListItemIcon>

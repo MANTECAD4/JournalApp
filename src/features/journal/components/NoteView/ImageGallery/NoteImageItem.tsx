@@ -1,21 +1,24 @@
 import { Close } from '@mui/icons-material';
 import { IconButton, ImageListItem, ImageListItemBar } from '@mui/material';
 import React, { useState } from 'react';
-import { useAppDispatch, type RootState } from '../../../../../store/store';
-import { startUpdatingNote } from '../../../../../store/journal/thunks';
+import { useAppDispatch, type RootState } from '@/store/store';
+import { startUpdatingNote } from '@/store/journal/thunks';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import type { NoteImage } from '../../../../../store/journal/journalSlice.types';
+import type { NoteImage } from '@/store/journal/journalSlice.types';
+import { DeleteImgModal } from '@/features/journal/components/NoteView/DeleteImgModal';
 
 type Props = {
 	item: NoteImage;
 };
 export const NoteImageItem = React.memo(({ item }: Props) => {
-	const dispatch = useAppDispatch();
-
 	const { activeNote, isSaving } = useSelector(
 		(state: RootState) => state.journal
 	);
+
+	const dispatch = useAppDispatch();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	const [hideDeleteBtn, setHideDeleteBtn] = useState(true);
 
 	const onDeleteImage = (imageId: string) => {
@@ -49,7 +52,10 @@ export const NoteImageItem = React.memo(({ item }: Props) => {
 				actionIcon={
 					<IconButton
 						disabled={isSaving}
-						onClick={() => onDeleteImage(item.id)}
+						onClick={() => {
+							setIsModalOpen(true);
+							setHideDeleteBtn(true);
+						}}
 						sx={{ color: 'white' }}
 						aria-label={`star ${item.name}`}
 					>
@@ -57,6 +63,12 @@ export const NoteImageItem = React.memo(({ item }: Props) => {
 					</IconButton>
 				}
 				actionPosition="left"
+			/>
+			<DeleteImgModal
+				imgItemId={item.id}
+				onDeleteImage={onDeleteImage}
+				isOpen={isModalOpen}
+				setIsOpen={setIsModalOpen}
 			/>
 		</ImageListItem>
 	);

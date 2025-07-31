@@ -1,6 +1,6 @@
 import { DeleteOutline } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
-import { DeleteModal } from '../DeleteModal';
+import { DeleteNoteModal } from '../DeleteNoteModal';
 import { useState } from 'react';
 import { useAppDispatch, type RootState } from '../../../../../store/store';
 import { toast } from 'react-toastify';
@@ -32,7 +32,7 @@ export const DeleteNoteButton = () => {
 				<DeleteOutline />
 				<Typography>Delete</Typography>
 			</Button>
-			<DeleteModal
+			<DeleteNoteModal
 				onDeleteNote={onDeleteNote}
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}

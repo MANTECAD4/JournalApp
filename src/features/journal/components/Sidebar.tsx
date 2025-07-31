@@ -28,7 +28,6 @@ export const Sidebar = ({ drawerWidth = 240 }: Props) => {
 
 	const onActivateNote = useCallback((note: Note) => {
 		dispatch(journalActions.setActiveNote(note));
-		dispatch(journalActions.setDraftNote(note));
 	}, []);
 
 	return (

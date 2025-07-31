@@ -1,21 +1,20 @@
-import { useNote } from '../../../hooks/NoteView/useNote';
-import { Chip, Divider, Grid, Typography } from '@mui/material';
-import { ImageGallery } from '../components';
+import { useSelector } from 'react-redux';
+import { Divider, Grid, Typography } from '@mui/material';
 import { AnimatePresence, motion } from 'motion/react';
+import { useNote } from '@/hooks/NoteView/useNote';
 import {
 	CloseNoteButton,
 	DeleteNoteButton,
+	FormTextFields,
+	ImageGallery,
+	SyncFormLabel,
 	UploadImagesButton,
-} from '../components/NoteView/Buttons/';
-import { FormTextFields } from '../components/NoteView/TextFields/FormTextFields';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../../store/store';
-import { CloudDone, CloudSync } from '@mui/icons-material';
+} from '@/features/journal/components/NoteView';
+
+import type { RootState } from '@/store/store';
 
 export const NoteView = () => {
-	const { activeNote, isSaving } = useSelector(
-		(state: RootState) => state.journal
-	);
+	const { activeNote } = useSelector((state: RootState) => state.journal);
 	const { register, styledDate } = useNote();
 
 	if (!activeNote) return;
@@ -33,20 +32,20 @@ export const NoteView = () => {
 					className="animate__animated animate__fadeIn"
 					sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
 				>
-					{/* Header part of the view */}
+					{/* Heading part of the view */}
 					<Grid
 						container
 						direction="row"
 						justifyContent="space-between"
 						sx={{ width: '100%' }}
 					>
-						{/* Date display */}
 						<Grid
 							container
 							direction={'row'}
 							alignItems={'center'}
 							justifyContent={'center'}
 						>
+							{/* Date display */}
 							<Typography
 								sx={{ mr: 2 }}
 								fontSize={39}
@@ -55,32 +54,17 @@ export const NoteView = () => {
 							>
 								{styledDate}
 							</Typography>
-							{isSaving ? (
-								<Chip
-									title="Saving changes..."
-									color="warning"
-									size="medium"
-									variant="outlined"
-									icon={<CloudSync />}
-									label="SAVING"
-									clickable={false}
-									onClick={() => {}}
-								/>
-							) : (
-								<Chip
-									title={`Everything's up to date`}
-									color="success"
-									size="medium"
-									variant="outlined"
-									icon={<CloudDone />}
-									label="SAVED"
-									clickable={false}
-									onClick={() => {}}
-								/>
-							)}
+
+							{/* Sync Flag  */}
+							<SyncFormLabel />
 						</Grid>
 						{/* Buttons group */}
-						<Grid>
+						<Grid
+							container
+							direction={'row'}
+							// justifyContent={'center'}
+							alignItems={'center'}
+						>
 							<CloseNoteButton />
 							<DeleteNoteButton />
 						</Grid>
