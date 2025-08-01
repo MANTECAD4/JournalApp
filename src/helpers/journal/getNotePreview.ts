@@ -1,4 +1,4 @@
-import type { Note } from '../../store/journal/journalSlice.types';
+import type { Note } from '@/store/journal/journalSlice.types';
 
 export const getNotePreview = (note: Note) => {
 	if (note.title)

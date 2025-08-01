@@ -1,3 +1,4 @@
+import { FirebaseError } from 'firebase/app';
 import type { CloundinaryResponse } from '../../apis/Cloudinary.types';
 
 export const fileUpload = async (file: File) => {
@@ -11,18 +12,16 @@ export const fileUpload = async (file: File) => {
 			method: 'POST',
 			body: formData,
 		});
+		if (!rawData.ok) throw new Error('Error: image not uploaded');
+
 		const cloudResp: CloundinaryResponse = await rawData.json();
 		return {
 			secure_url: cloudResp.secure_url,
-			id: cloudResp.asset_id,
+			id: cloudResp.public_id,
 			name: cloudResp.original_filename,
 		};
-	} catch (error) {
-		console.warn(error);
-		return {
-			secure_url: 'No url',
-			id: 'No id',
-			name: 'No name',
-		};
+	} catch (error: any) {
+		console.warn(error.message);
+		throw new Error('Error: image not uploaded');
 	}
 };
