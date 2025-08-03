@@ -9,8 +9,8 @@ import type { SignInUser } from '../auth.types';
  * @returns
  */
 export const startEmailAndPasswordSignIn = (props: SignInUser) => {
-	const { email, password } = props;
 	return async (dispatch: AppDispatch) => {
+		const { email, password } = props;
 		dispatch(authActions.checkingCredentials());
 		const result = await signInWithEmailPassword({ email, password });
 		if (!result.ok) return dispatch(authActions.logout(result.errorMessage));

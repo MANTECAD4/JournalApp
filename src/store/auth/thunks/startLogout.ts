@@ -4,13 +4,13 @@ import type { AppDispatch } from '../../store';
 import { journalActions } from '../../journal/journalSlice';
 
 export const startLogout = () => {
-	return (dispatch: AppDispatch) => {
+	return async (dispatch: AppDispatch) => {
 		dispatch(authActions.checkingCredentials());
-		setTimeout(async () => {
-			await logoutFirebaseUser();
-			dispatch(journalActions.cleanJournal());
+		// setTimeout(async () => {
+		await logoutFirebaseUser();
+		dispatch(journalActions.cleanJournal());
 
-			dispatch(authActions.logout(''));
-		}, 500);
+		dispatch(authActions.logout(''));
+		// }, 500);
 	};
 };

@@ -21,7 +21,7 @@ export const signInWithGoogle = async () => {
 			uid,
 			errorMessage: '',
 		};
-	} catch (error) {
+	} catch (error: any) {
 		return catchError(error);
 	}
 };

@@ -21,7 +21,7 @@ export const fileUpload = async (file: File) => {
 			name: cloudResp.original_filename,
 		};
 	} catch (error: any) {
-		console.warn(error.message);
+		// console.warn(error.message);
 		throw new Error('Error: image not uploaded');
 	}
 };
