@@ -20,6 +20,6 @@ export const useAppDispatch = useDispatch.withTypes<AppDispatch>(); // Export a 
 export type AppThunk<ReturnType = void> = ThunkAction<
 	ReturnType,
 	RootState,
-	unknown,
+	void,
 	UnknownAction
 >;
