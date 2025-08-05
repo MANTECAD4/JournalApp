@@ -1,7 +1,7 @@
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 import { useLogin } from '../../src/hooks/useLogin';
-import { useLoginWrapper } from '../fixtures/wrappers';
+import { notAuthWrapper } from '../fixtures/wrappers';
 import { startGoogleSignIn } from '../../src/store/auth/thunks/startGoogleSignIn';
 import { startEmailAndPasswordSignIn } from '../../src/store/auth/thunks/startEmailAndPasswordSignIn';
 
@@ -27,7 +27,7 @@ describe('useLogin custom hook (login-page logic)', () => {
 
 	it(`dispatches startGoogleSignIn within 'onGoogleSignIn' method`, () => {
 		const { result } = renderHook(() => useLogin(), {
-			wrapper: useLoginWrapper,
+			wrapper: notAuthWrapper,
 		});
 		const { onGoogleSignIn } = result.current;
 		act(() => {
@@ -40,7 +40,7 @@ describe('useLogin custom hook (login-page logic)', () => {
 	it(`dispatches 'startEmailAndPasswordSignIn' within 'onSubmit' method`, () => {
 		const testData = { password: 'password123', email: 'example@gmail.com' };
 		const { result } = renderHook(() => useLogin(), {
-			wrapper: useLoginWrapper,
+			wrapper: notAuthWrapper,
 		});
 		const { onSubmit } = result.current;
 		act(() => {
