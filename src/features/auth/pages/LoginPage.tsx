@@ -1,12 +1,12 @@
-import { Google, Login } from '@mui/icons-material';
-import {
-	Alert,
-	Button,
-	Grid,
-	Link,
-	TextField,
-	Typography,
-} from '@mui/material';
+import Google from '@mui/icons-material/Google';
+import Login from '@mui/icons-material/Login';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+
 import { Link as RouterLink } from 'react-router';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useLogin } from '../../../hooks';
@@ -55,12 +55,12 @@ export const LoginPage = () => {
 							type="password"
 							{...register('password', {
 								required: 'A password is required',
-								minLength: { value: 6, message: 'Min 6 characters' },
-								pattern: {
-									value:
-										/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-									message: 'Invalid password',
-								},
+								// minLength: { value: 6, message: 'Min 6 characters' },
+								// pattern: {
+								// 	value:
+								// 		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+								// 	message: 'Invalid password',
+								// },
 							})}
 							error={!!errors.password}
 							helperText={errors.password?.message}
@@ -105,7 +105,8 @@ export const LoginPage = () => {
 						>
 							<Button
 								disabled={status === 'checking'}
-								onClick={onGoogleSignIn}
+								onClick={() => onGoogleSignIn()}
+								aria-label="google-btn"
 								fullWidth
 								sx={{ backgroundColor: 'secondary.main' }}
 								variant="contained"

@@ -22,7 +22,12 @@ export const useLogin = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<LoginInputs>();
+	} = useForm<LoginInputs>({
+		defaultValues: {
+			email: '',
+			password: '',
+		},
+	});
 
 	const onSubmit: SubmitHandler<LoginInputs> = (data) => {
 		dispatch(startEmailAndPasswordSignIn(data));

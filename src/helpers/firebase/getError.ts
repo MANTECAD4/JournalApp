@@ -24,7 +24,7 @@ export const getError = (code: string) => {
 	};
 
 	if (!errors[code]) {
-		console.warn(code);
+		// console.warn(code);
 		return 'Oops! Something went wrong. Try again.';
 	}
 	return errors[code];
