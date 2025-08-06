@@ -1,7 +1,18 @@
-import { collection, deleteDoc, getDocs } from 'firebase/firestore/lite';
+import {
+	collection,
+	deleteDoc,
+	getDocs,
+	setDoc,
+} from 'firebase/firestore/lite';
 import { journalActions } from '../../../../src/store/journal/journalSlice';
 import { startCreatingEmptyNote } from '../../../../src/store/journal/thunks/startCreatingEmptyNote';
 import { FirebaseDB } from '../../../../src/firebase';
+
+jest.mock('firebase/firestore/lite', () => ({
+	...jest.requireActual('firebase/firestore/lite'),
+	setDoc: jest.fn(),
+}));
+
 describe('startCreatingEmptyNote journal thunk', () => {
 	// Mocks
 	const dispatch = jest.fn();
@@ -39,6 +50,7 @@ describe('startCreatingEmptyNote journal thunk', () => {
 				id: expect.any(String),
 			})
 		);
+		expect(setDoc).toHaveBeenCalled();
 
 		// Deleting register
 		const notesCollection = collection(FirebaseDB, 'users', uid, 'notes');
