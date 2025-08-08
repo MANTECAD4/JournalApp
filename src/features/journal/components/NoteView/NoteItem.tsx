@@ -1,5 +1,6 @@
-import React from 'react';
-import { TurnedInNot } from '@mui/icons-material';
+import React, { useMemo } from 'react';
+import TurnedInNot from '@mui/icons-material/TurnedInNot';
+import TurnedIn from '@mui/icons-material/TurnedIn';
 import {
 	Grid,
 	ListItem,
@@ -11,6 +12,7 @@ import type { Note } from '../../../../store/journal/journalSlice.types';
 import { getNotePreview } from '../../../../helpers/journal/getNotePreview';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/store';
+import { grey } from '@mui/material/colors';
 
 type Props = {
 	note: Note;
@@ -18,13 +20,25 @@ type Props = {
 };
 
 export const NoteItem = React.memo(({ note, activateNote }: Props) => {
-	const { isSaving } = useSelector((state: RootState) => state.journal);
+	const { activeNote } = useSelector((state: RootState) => state.journal);
+
+	const isActive = useMemo(
+		() => activeNote !== null && activeNote.id === note.id,
+		[note, activeNote]
+	);
 	return (
-		<ListItem disablePadding>
-			<ListItemButton disabled={isSaving} onClick={() => activateNote(note)}>
-				<ListItemIcon>
-					<TurnedInNot />
-				</ListItemIcon>
+		<ListItem
+			disablePadding
+			sx={
+				isActive
+					? {
+							backgroundColor: grey[100],
+					  }
+					: {}
+			}
+		>
+			<ListItemButton onClick={() => activateNote(note)}>
+				<ListItemIcon>{isActive ? <TurnedInNot /> : <TurnedIn />}</ListItemIcon>
 				<Grid container direction={'column'}>
 					<ListItemText
 						primary={new Date(note.date).toLocaleDateString('en-US', {

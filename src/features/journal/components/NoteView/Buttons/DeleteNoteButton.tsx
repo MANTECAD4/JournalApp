@@ -13,6 +13,7 @@ export const DeleteNoteButton = () => {
 
 	// --- Delete Note ---
 	const onDeleteNote = () => {
+		if (isSaving) return;
 		try {
 			dispatch(startDeletingNote());
 			toast.success('Note deleted');
@@ -26,7 +27,7 @@ export const DeleteNoteButton = () => {
 			<Button
 				size="large"
 				onClick={() => setIsOpen(true)}
-				disabled={isSaving}
+				// disabled={isSaving}
 				sx={{ px: 3, py: 2, alignItems: 'center', color: 'red' }}
 			>
 				<DeleteOutline />

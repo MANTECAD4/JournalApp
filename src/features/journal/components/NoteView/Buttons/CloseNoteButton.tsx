@@ -8,13 +8,15 @@ export const CloseNoteButton = () => {
 	const { isSaving } = useSelector((state: RootState) => state.journal);
 	const dispatch = useAppDispatch();
 
-	const onClosingNote = () => dispatch(journalActions.closeNote());
+	const onClosingNote = () => {
+		if (isSaving) return;
+		dispatch(journalActions.closeNote());
+	};
 
 	return (
 		<>
 			<Button
 				size="large"
-				disabled={isSaving}
 				onClick={() => onClosingNote()}
 				sx={{ px: 3, py: 2, alignItems: 'center' }}
 			>

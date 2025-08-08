@@ -24,13 +24,6 @@ export const useNoteForm = () => {
 	const title = watch('title');
 	const body = watch('body');
 
-	const isSaveEnabled = useMemo(
-		() =>
-			title.trim().length > 0 ||
-			body.trim().length > 0 ||
-			activeNote!.imageUrls.length > 0,
-		[title, body, activeNote]
-	);
 	// ========= Form Sync on Note Change =========
 	useEffect(() => {
 		if (activeNote) {
@@ -42,15 +35,30 @@ export const useNoteForm = () => {
 	}, [activeNote, reset]);
 
 	// ========= Debounced Draft Sync =========
-	const memoFormState = useMemo(() => ({ title, body }), [title, body]);
+	const memoFormState = useMemo(
+		() => ({
+			formPayload: { title: title.trim(), body: body.trim() },
+			isSaveEnabled:
+				title.trim().length > 0 ||
+				body.trim().length > 0 ||
+				activeNote!.imageUrls.length > 0,
+			isUpToDate:
+				JSON.stringify({
+					title: activeNote!.title,
+					body: activeNote!.body,
+				}) === JSON.stringify({ title: title.trim(), body: body.trim() }),
+		}),
+		[title, body]
+	);
 	const debouncedForm = useDebounce(memoFormState, 1500);
 
 	useEffect(() => {
-		if (isSaveEnabled) dispatch(startUpdatingNote(debouncedForm));
-	}, [debouncedForm]);
+		if (debouncedForm.isSaveEnabled && !debouncedForm.isUpToDate) {
+			dispatch(startUpdatingNote(debouncedForm.formPayload));
+		}
+	}, [debouncedForm, dispatch, startUpdatingNote]);
 
 	return {
-		isSaveEnabled,
 		register,
 	};
 };

@@ -11,10 +11,6 @@ jest.mock('../../src/store/store', () => ({
 }));
 
 jest.mock('../../src/store/auth/thunks/startCreatingUserWithEmailPassword');
-const mockedStratCreatingUser =
-	startCreatingUserWithEmailPassword as jest.MockedFunction<
-		typeof startCreatingUserWithEmailPassword
-	>;
 
 describe('useRegister custom hook (Register page logic)', () => {
 	it(`dispatches 'startCreatingUserWithEmailPassword' thunk within onSubmit method`, () => {
@@ -31,6 +27,6 @@ describe('useRegister custom hook (Register page logic)', () => {
 		});
 
 		expect(mockedUseAppDispatch).toHaveBeenCalled();
-		expect(mockedStratCreatingUser).toHaveBeenCalledWith(testData);
+		expect(startCreatingUserWithEmailPassword).toHaveBeenCalledWith(testData);
 	});
 });

@@ -73,7 +73,7 @@ export const NoteView = () => {
 					<Divider sx={{ width: '100%', mb: 2 }} />
 					{/* Form data */}
 					<FormTextFields register={register} />
-					{/* Masonr */}
+					{/* Masonry */}
 					<ImageGallery images={activeNote.imageUrls} />
 					{/* Upload images floating button */}
 					<UploadImagesButton />

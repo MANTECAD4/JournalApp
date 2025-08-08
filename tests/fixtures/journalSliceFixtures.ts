@@ -13,29 +13,24 @@ export const testJrnlInitialStateIsSaving: journalState = {
 	notes: [],
 };
 
-export const testNote = {
-	id: 'Note123',
+export const testNote1 = {
+	id: 'Note1',
 	body: '',
 	date: 12345678,
 	imageUrls: [],
-	title: '',
+	title: 'Note number one',
+};
+export const testNote2 = {
+	id: 'Note2',
+	body: '',
+	date: 12345678,
+	imageUrls: [],
+	title: 'note numbeer two',
 };
 
 export const testNotesList = [
-	{
-		id: 'Note1',
-		body: '',
-		date: 12345678,
-		imageUrls: [],
-		title: 'Party at the beach',
-	},
-	{
-		id: 'Note2',
-		body: '',
-		date: 12345678,
-		imageUrls: [],
-		title: 'My first kiss',
-	},
+	testNote1,
+	testNote2,
 	{
 		id: 'Note3',
 		body: '',
@@ -46,8 +41,8 @@ export const testNotesList = [
 ];
 
 export const testActiveNoteState = {
-	activeNote: testNote,
+	activeNote: testNote1,
 	isLoading: false,
 	isSaving: true,
-	notes: [...testNotesList, testNote],
+	notes: [...testNotesList],
 };
