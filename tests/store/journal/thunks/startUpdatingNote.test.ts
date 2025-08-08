@@ -1,7 +1,7 @@
-import { testNote } from '../../../fixtures/journalSliceFixtures';
+import { doc, setDoc } from 'firebase/firestore/lite';
+import { testNote1 } from '../../../fixtures/journalSliceFixtures';
 import { startUpdatingNote } from '../../../../src/store/journal/thunks/startUpdatingNote';
 import { journalActions } from '../../../../src/store/journal/journalSlice';
-import { doc, setDoc } from 'firebase/firestore/lite';
 
 jest.mock('firebase/firestore/lite', () => ({
 	...jest.requireActual('firebase/firestore/lite'),
@@ -17,7 +17,7 @@ describe('startUpdatingNote journal thunk', () => {
 			uid: 'test-uid',
 		},
 		journal: {
-			activeNote: testNote,
+			activeNote: testNote1,
 		},
 	});
 
@@ -38,7 +38,7 @@ describe('startUpdatingNote journal thunk', () => {
 		expect(dispatch).toHaveBeenNthCalledWith(
 			2,
 			journalActions.updateNote({
-				...testNote,
+				...testNote1,
 				title: newData.title,
 				body: newData.body,
 			})
@@ -67,7 +67,7 @@ describe('startUpdatingNote journal thunk', () => {
 		expect(dispatch).toHaveBeenNthCalledWith(
 			2,
 			journalActions.updateNote({
-				...testNote,
+				...testNote1,
 				title: newData.title,
 				body: newData.body,
 				imageUrls: newData.imageUrls,

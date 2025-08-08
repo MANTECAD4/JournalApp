@@ -3,7 +3,7 @@ import {
 	journalSlice,
 } from '../../../src/store/journal/journalSlice';
 import {
-	testNote,
+	testNote1,
 	testJournalInitialState,
 	testNotesList,
 	testJrnlInitialStateIsSaving,
@@ -35,18 +35,18 @@ describe('Journal Slice', () => {
 	it('should add an empty note to the list and set isSaving flag to false', () => {
 		const state = journalSlice.reducer(
 			testJrnlInitialStateIsSaving,
-			journalActions.addNewEmptyNote(testNote)
+			journalActions.addNewEmptyNote(testNote1)
 		);
-		expect(state.notes).toContain(testNote);
+		expect(state.notes).toContain(testNote1);
 		expect(state.isSaving).toBe(false);
 	});
 
 	it('should set a note as active via the setActiveNote action', () => {
 		const state = journalSlice.reducer(
 			testJournalInitialState,
-			journalActions.setActiveNote(testNote)
+			journalActions.setActiveNote(testNote1)
 		);
-		expect(state.activeNote).toEqual(testNote);
+		expect(state.activeNote).toEqual(testNote1);
 	});
 
 	it('should set notes list', () => {
@@ -58,7 +58,7 @@ describe('Journal Slice', () => {
 	});
 
 	it(`should update active's note payload, even in notes list`, () => {
-		const updatedNote = { ...testNote, title: 'New title uwu' };
+		const updatedNote = { ...testNote1, title: 'New title uwu' };
 
 		const state = journalSlice.reducer(
 			testActiveNoteState,
@@ -73,10 +73,10 @@ describe('Journal Slice', () => {
 	it('should delete the active note', () => {
 		const state = journalSlice.reducer(
 			testActiveNoteState,
-			journalActions.deleteNote(testNote)
+			journalActions.deleteNote(testNote1)
 		);
 		expect(state.activeNote).toBe(null);
-		expect(state.notes).not.toContain(testNote);
+		expect(state.notes).not.toContain(testNote1);
 		expect(state.isSaving).toBe(false);
 	});
 

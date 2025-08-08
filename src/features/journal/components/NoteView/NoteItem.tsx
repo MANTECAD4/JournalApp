@@ -38,7 +38,7 @@ export const NoteItem = React.memo(({ note, activateNote }: Props) => {
 			}
 		>
 			<ListItemButton onClick={() => activateNote(note)}>
-				<ListItemIcon>{isActive ? <TurnedInNot /> : <TurnedIn />}</ListItemIcon>
+				<ListItemIcon>{isActive ? <TurnedIn /> : <TurnedInNot />}</ListItemIcon>
 				<Grid container direction={'column'}>
 					<ListItemText
 						primary={new Date(note.date).toLocaleDateString('en-US', {

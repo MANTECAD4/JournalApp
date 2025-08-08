@@ -15,7 +15,7 @@ import type { RootState } from '@/store/store';
 
 export const NoteView = () => {
 	const { activeNote } = useSelector((state: RootState) => state.journal);
-	const { register, styledDate } = useNote();
+	const { isNoteEmpty, register, styledDate } = useNote();
 
 	if (!activeNote) return;
 
@@ -65,7 +65,7 @@ export const NoteView = () => {
 							// justifyContent={'center'}
 							alignItems={'center'}
 						>
-							<CloseNoteButton />
+							<CloseNoteButton isNoteEmpty={isNoteEmpty} />
 							<DeleteNoteButton />
 						</Grid>
 					</Grid>

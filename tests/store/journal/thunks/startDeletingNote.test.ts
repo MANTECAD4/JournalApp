@@ -1,4 +1,4 @@
-import { testNote } from '../../../fixtures/journalSliceFixtures';
+import { testNote1 } from '../../../fixtures/journalSliceFixtures';
 import { startDeletingNote } from '../../../../src/store/journal/thunks/startDeletingNote';
 import { journalActions } from '../../../../src/store/journal/journalSlice';
 import { deleteDoc, doc } from 'firebase/firestore/lite';
@@ -18,7 +18,7 @@ describe('startDeletingNote journal thunk', () => {
 			uid,
 		},
 		journal: {
-			activeNote: testNote,
+			activeNote: testNote1,
 		},
 	});
 
@@ -28,7 +28,7 @@ describe('startDeletingNote journal thunk', () => {
 		expect(dispatch).toHaveBeenNthCalledWith(1, journalActions.setIsSaving());
 		expect(dispatch).toHaveBeenNthCalledWith(
 			2,
-			journalActions.deleteNote(testNote)
+			journalActions.deleteNote(testNote1)
 		);
 		expect(doc).toHaveBeenCalled();
 		expect(deleteDoc).toHaveBeenCalled();

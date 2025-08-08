@@ -24,6 +24,14 @@ export const useNoteForm = () => {
 	const title = watch('title');
 	const body = watch('body');
 
+	const isNoteEmpty = useMemo(
+		() =>
+			title.trim().length < 1 &&
+			body.trim().length < 1 &&
+			activeNote!.imageUrls.length === 0,
+		[title, body, activeNote]
+	);
+
 	// ========= Form Sync on Note Change =========
 	useEffect(() => {
 		if (activeNote) {
@@ -59,6 +67,7 @@ export const useNoteForm = () => {
 	}, [debouncedForm, dispatch, startUpdatingNote]);
 
 	return {
+		isNoteEmpty,
 		register,
 	};
 };
