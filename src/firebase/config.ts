@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { getEnvironment } from '../helpers/firebase/getEnvironment';
+import { getEnvironment } from '../helpers/getEnvironment';
 import { initializeApp } from 'firebase/app';
 import {
 	browserSessionPersistence,

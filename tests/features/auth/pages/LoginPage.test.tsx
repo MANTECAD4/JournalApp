@@ -6,13 +6,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authSlice } from '../../../../src/store/auth/authSlice';
 import { notAuthenticatedState } from '../../../fixtures/authFixtures';
 
-const store = configureStore({
-	reducer: {
-		auth: authSlice.reducer,
-	},
-	preloadedState: { auth: notAuthenticatedState },
-});
-
 const mockedOnGoogleSignIn = jest.fn();
 jest.mock('../../../../src/hooks/useLogin', () => ({
 	useLogin: () => ({
@@ -27,6 +20,12 @@ jest.mock('../../../../src/hooks/useLogin', () => ({
 	}),
 }));
 
+const store = configureStore({
+	reducer: {
+		auth: authSlice.reducer,
+	},
+	preloadedState: { auth: notAuthenticatedState },
+});
 describe('Login Page', () => {
 	it('calls Google sign in via clicking google btn', () => {
 		render(

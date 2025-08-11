@@ -7,7 +7,7 @@ require('dotenv').config({
 	debug: false,
 });
 
-jest.mock('./src/helpers/firebase/getEnvironment', () => ({
+jest.mock('./src/helpers/getEnvironment', () => ({
 	getEnvironment: () => {
 		return { ...process.env };
 	},

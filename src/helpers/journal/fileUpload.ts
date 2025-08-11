@@ -1,4 +1,3 @@
-import { FirebaseError } from 'firebase/app';
 import type { CloundinaryResponse } from '../../apis/Cloudinary.types';
 
 export const fileUpload = async (file: File) => {

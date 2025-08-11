@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store/store';
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 
 /**
  * Required note values that are not directly-related to a bigger process
